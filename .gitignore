@@ -1,0 +1,37 @@
+# Build
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+packages/
+
+# EF Core
+
+# Secrets
+appsettings.Development.json
+secrets.json
+
+# Outros
+*.cache
+*.tmp
+
+sql-data/

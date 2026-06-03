@@ -1,0 +1,6 @@
+@SistemaControleProdutoEstoque.API_HostAddress = http://localhost:5147
+
+GET {{SistemaControleProdutoEstoque.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
