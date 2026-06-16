@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace SistemaControleProdutosEstoque.Domain.Enums;
 
-namespace SistemaControleProdutosEstoque.Domain.Enums
+public enum TipoMovimentacao
 {
-    internal class TipoMovimentacao
-    {
-    }
+    Entrada = 1,
+    Saida = 2
 }
