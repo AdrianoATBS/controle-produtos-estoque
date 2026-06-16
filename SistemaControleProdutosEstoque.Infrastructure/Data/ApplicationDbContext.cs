@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace SistemaControleProdutosEstoque.Infrastructure.Data
+namespace SistemaControleProdutosEstoque.Infrastructure.Data;
+
+public class ApplicationDbContext : DbContext
 {
-    internal class ApplicationDbContext
-    {
-    }
 }
