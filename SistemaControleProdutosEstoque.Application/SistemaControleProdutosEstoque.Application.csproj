@@ -8,17 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Requests\Categorias\" />
     <Folder Include="Requests\Estoque\" />
     <Folder Include="Requests\Produto\" />
-    <Folder Include="Responses\Categorias\" />
-    <Folder Include="Responses\Estoque\" />
-    <Folder Include="Responses\Produtos\" />
     <Folder Include="Services\" />
-    <Folder Include="UseCases\Categoria\CriarProdutoUseCase\" />
     <Folder Include="UseCases\Estoque\" />
     <Folder Include="UseCases\Produtos\" />
     <Folder Include="Validators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
