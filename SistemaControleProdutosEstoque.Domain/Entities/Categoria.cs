@@ -6,6 +6,7 @@ public class Categoria
     public string Nome { get; private set; } = string.Empty;
     public bool Ativo { get; private set; }
     public DateTime DataCriacao { get; private set; }
+    public ICollection<Produto> Produtos { get; private set; } = new List<Produto>();
     private Categoria() { }
     private Categoria(string nome)
     {
