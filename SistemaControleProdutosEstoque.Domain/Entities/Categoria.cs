@@ -27,14 +27,14 @@ public class Categoria
             throw new ArgumentException("O nome da categoria é obrigatório.");
     }
     
-    public void CategoriaDesativada()
+    public void Desativar()
     {
         if(!Ativo)
             throw new InvalidOperationException("A categoria já está desativada.");
     Ativo = false;
     }
     
-    public void CategoriaAtivada()
+    public void Ativar()
     {
         if(Ativo)
             throw new InvalidOperationException("A categoria já está ativa.");

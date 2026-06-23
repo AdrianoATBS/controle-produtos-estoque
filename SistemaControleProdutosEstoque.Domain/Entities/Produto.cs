@@ -59,13 +59,13 @@ public class Produto
          if(!categoria.Ativo)
             throw new InvalidOperationException("Não é possível associar um produto a uma categoria desativada.");
     }
-    public void ProdutoDesativado()
+    public void Desativar()
     {
         if(!Ativo)
                throw new InvalidOperationException("O produto já está desativado.");
         Ativo = false;
     }
-    public void ProdutoAtivado()
+    public void Ativar()
     {
         if(Ativo)
             throw new InvalidOperationException("O produto já está ativado.");
