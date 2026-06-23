@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SistemaControleProdutosEstoque.Domain.Entities;
 
-namespace SistemaControleProdutosEstoque.Domain.Interfaces
+namespace SistemaControleProdutosEstoque.Domain.Interfaces;
+
+public interface ICategoriaRepository
 {
-    internal interface ICategoriaRepository
-    {
-    }
+    void AdicionarCategoria(Categoria categoria);
+    void AtualizarCategoria(Categoria categoria);
+    void DeletarCategoria(Guid id);
+   
+    IEnumerable<Categoria> ObterTodasCategorias();
+    Categoria? ObterCategoria(Guid id);
+    bool ExisteCategoriaComNome(string nome);
+
 }

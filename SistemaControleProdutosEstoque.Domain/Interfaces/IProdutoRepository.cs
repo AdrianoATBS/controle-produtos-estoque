@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SistemaControleProdutosEstoque.Domain.Entities;
 
-namespace SistemaControleProdutosEstoque.Domain.Interfaces
+namespace SistemaControleProdutosEstoque.Domain.Interfaces;
+
+public interface IProdutoRepository
 {
-    internal interface IProdutoRepository
-    {
-    }
+    void AdicionarProduto(Produto produto);
+    void AtualizarProduto(Produto produto);
+    void DeletarProduto(Guid id);
+    IEnumerable<Produto> ObterTodosOsProdutos();
+    IEnumerable<Produto> ObterProdutosPorCategoria(Guid categoriaId);
+    Produto? ObterProduto(Guid id);
+    
+    IEnumerable<Produto> ObterProdutosPorNome(string nome);
+
 }
