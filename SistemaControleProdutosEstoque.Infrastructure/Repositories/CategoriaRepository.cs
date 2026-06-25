@@ -1,12 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaControleProdutosEstoque.Domain.Entities;
+using SistemaControleProdutosEstoque.Domain.Interfaces;
+using SistemaControleProdutosEstoque.Infrastructure.Data;
 
-namespace SistemaControleProdutosEstoque.Infrastructure.Repositories
+namespace SistemaControleProdutosEstoque.Infrastructure.Repositories;
+
+public class CategoriaRepository : ICategoriaRepository
 {
-    internal class CategoriaRepository
+    private readonly ApplicationDbContext _context;
+    public CategoriaRepository(ApplicationDbContext context)
     {
+        _context = context;
+    }
+    public void AdicionarCategoria(Categoria categoria)
+    {
+        _context.Categorias.Add(categoria);
+        _context.SaveChanges();
+    }
+
+    public void AtualizarCategoria(Categoria categoria)
+    {
+        _context.Categorias.Update(categoria);
+        _context.SaveChanges();
+    }
+
+    public void DeletarCategoria(Guid id)
+    {
+        var categoria = _context.Categorias.FirstOrDefault(c => c.Id == id);
+        if (categoria != null)
+        {
+            _context.Categorias.Remove(categoria);
+            _context.SaveChanges();
+        }
+     }
+
+    public bool ExisteCategoriaComNome(string nome)
+    {
+       return  _context.Categorias.Any(c => c.Nome == nome);
+    
+    }
+
+    public Categoria? ObterCategoriaId(Guid id)
+    {
+        return _context.Categorias.FirstOrDefault(c => c.Id == id);
+    }
+
+    public IEnumerable<Categoria> ObterTodasCategorias()
+    {
+        return _context.Categorias.ToList();
     }
 }
