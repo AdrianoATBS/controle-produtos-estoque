@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace SistemaControleProdutosEstoque.Application.Responses.Categorias;
 
-namespace SistemaControleProdutosEstoque.Application.Responses.Categorias
+public class CriarCategoriaResponse
 {
-    internal class CriarCategoriaResponse
-    {
-    }
+    public Guid Id { get; set; }
+    public string Nome { get; set; } = string.Empty;
+    public bool Ativo { get; set; }
+    public DateTime DataCriacao { get; set; }
 }
