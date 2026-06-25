@@ -12,7 +12,8 @@
     <Folder Include="Services\" />
     <Folder Include="UseCases\Estoque\" />
     <Folder Include="UseCases\Produtos\" />
-    <Folder Include="Validators\" />
+    <Folder Include="Validators\Estoque\" />
+    <Folder Include="Validators\Produtos\" />
   </ItemGroup>
 
   <ItemGroup>
