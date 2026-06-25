@@ -4,7 +4,7 @@ namespace SistemaControleProdutosEstoque.Domain.Interfaces;
 
 public interface IMovimentacaoEstoqueRepository
 {
-    void SalvarMovimentacaoEstoque(MovimentacaoEstoque movimentacaoEstoque);
+    void RegistrarMovimentacaoEstoque(MovimentacaoEstoque movimentacaoEstoque);
     MovimentacaoEstoque? ObterMovimentacao(Guid id);
     IEnumerable<MovimentacaoEstoque> ObterTodasMovimentacoes();
     IEnumerable<MovimentacaoEstoque> ObterMovimentacaoEstoqueData(DateTime data);

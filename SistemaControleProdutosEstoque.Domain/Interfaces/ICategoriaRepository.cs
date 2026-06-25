@@ -9,7 +9,7 @@ public interface ICategoriaRepository
     void DeletarCategoria(Guid id);
    
     IEnumerable<Categoria> ObterTodasCategorias();
-    Categoria? ObterCategoria(Guid id);
+    Categoria? ObterCategoriaId(Guid id);
     bool ExisteCategoriaComNome(string nome);
 
 }
