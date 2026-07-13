@@ -23,14 +23,13 @@ public class AlterarNomeCategoriaUseCase : IAlterarNomeCategoriaUseCase
         if (!resultadoValidator.IsValid)
             throw new ValidationException(resultadoValidator.Errors);
         
-        var jaExiste = _categoriaRepository.ExisteCategoriaComNome(request.NovoNome);
-        if(jaExiste)
-            throw new Exception("Já existe uma categoria com esse nome.");
-
-
         var categoria = _categoriaRepository.ObterCategoriaId(id);
         if(categoria == null)
-               throw new Exception("Categoria não encontrada.");
+               throw new KeyNotFoundException("Categoria não encontrada.");
+        
+        var jaExiste = _categoriaRepository.ExisteCategoriaComNome(request.NovoNome);
+        if(jaExiste)
+            throw new InvalidOperationException("Já existe uma categoria com esse nome.");
 
         categoria.AlterarNome(request.NovoNome);
 
@@ -38,6 +37,7 @@ public class AlterarNomeCategoriaUseCase : IAlterarNomeCategoriaUseCase
 
         return new AlterarNomeCategoriaResponse
         {
+            Id = categoria.Id,
             NovoNome = categoria.Nome,
             Ativo = categoria.Ativo
         };
