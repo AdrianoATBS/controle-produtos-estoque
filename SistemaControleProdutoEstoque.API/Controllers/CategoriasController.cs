@@ -22,11 +22,18 @@ namespace SistemaControleProdutoEstoque.API.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CriarCategoria([FromBody] CriarCategoriaRequest request)
-        { 
-            var resultado = await _criarCategoriaUseCase.Executar(request);
+        {
+            try
+            {
+                var resultado = await _criarCategoriaUseCase.Executar(request);
 
-            
-            return Created(string.Empty, resultado);
+                return Created(string.Empty, resultado);
+
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> AlterarNomeCategoria(Guid id, AlterarNomeCategoriaRequest request)
@@ -42,5 +49,8 @@ namespace SistemaControleProdutoEstoque.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+
     }
 }
