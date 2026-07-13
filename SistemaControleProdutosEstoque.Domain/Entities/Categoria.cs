@@ -25,8 +25,20 @@ public class Categoria
     {
         if (string.IsNullOrWhiteSpace(nome))
             throw new ArgumentException("O nome da categoria é obrigatório.");
+                
     }
-    
+    public void AlterarNome(string novoNome)
+    {
+        ValidarNome(novoNome);
+        if(!Ativo)
+            throw new InvalidOperationException("Não é possível alterar o nome de uma categoria desativada.");
+
+        if (Normalizar(novoNome) == Normalizar(Nome))
+            throw new InvalidOperationException("O novo nome da categoria é igual ao nome atual.");
+
+        Nome = novoNome;
+    }
+
     public void Desativar()
     {
         if(!Ativo)
@@ -41,5 +53,11 @@ public class Categoria
         Ativo = true;
     }
    
+    private static string Normalizar(string valor)
+    {
+        if (string.IsNullOrWhiteSpace(valor))
+            return string.Empty;
+        return valor.Trim().ToLower();
+    }
     
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SistemaControleProdutosEstoque.Application.UseCases;
+using SistemaControleProdutosEstoque.Application.UseCases.Categoria.AlterarNomeCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.CriarProdutoUseCase;
 using SistemaControleProdutosEstoque.Application.Validators.Categorias;
 
@@ -11,6 +12,8 @@ public static class ConfigureApplication
     {
         services.AddScoped<CriarCategoriaRequestValidator>();
         services.AddScoped<ICriarCategoriaUseCase, CriarCategoriaUseCase>();
+        services.AddScoped<AlterarNomeCategoriaRequestValidator>();
+        services.AddScoped<IAlterarNomeCategoriaUseCase, AlterarNomeCategoriaUseCase>();
         return services;
     }
 }
