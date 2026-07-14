@@ -19,9 +19,9 @@ public class AlterarNomeCategoriaUseCase : IAlterarNomeCategoriaUseCase
     }
     public async Task<AlterarNomeCategoriaResponse> Executar(Guid id, AlterarNomeCategoriaRequest request)
     {
-        var resultadoValidator = await _validator.ValidateAsync(request);
-        if (!resultadoValidator.IsValid)
-            throw new ValidationException(resultadoValidator.Errors);
+        var resultadoValidacao = await _validator.ValidateAsync(request);
+        if (!resultadoValidacao.IsValid)
+            throw new ValidationException(resultadoValidacao.Errors);
         
         var categoria = _categoriaRepository.ObterCategoriaId(id);
         if(categoria == null)
