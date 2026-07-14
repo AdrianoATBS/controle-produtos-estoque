@@ -35,7 +35,7 @@ public class CriarCategoriaUseCase : ICriarCategoriaUseCase
             Id = novaCategoria.Id,
             Nome = novaCategoria.Nome,
             Ativo = novaCategoria.Ativo,
-            DataCriacao = novaCategoria.DataCriacao
+            DataCriacao = novaCategoria.DataCriacao.ToLocalTime().ToString("dd/MM/yyyy HH:mm:ss")
         };
         return response;
     }
