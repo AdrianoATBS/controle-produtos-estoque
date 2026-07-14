@@ -13,7 +13,7 @@ public class Categoria
         Id = Guid.NewGuid();
         Nome = nome;
         Ativo = true;
-        DataCriacao = DateTime.UtcNow;
+        DataCriacao = DateTime.Now;
     }
     public static Categoria Criar(string nome)
     {
