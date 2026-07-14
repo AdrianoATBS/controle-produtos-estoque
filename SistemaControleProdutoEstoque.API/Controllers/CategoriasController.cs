@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SistemaControleProdutosEstoque.Application.Requests.Categorias;
 using SistemaControleProdutosEstoque.Application.UseCases;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.AlterarNomeCategoriaUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Categoria.BuscarCategoriaPorIdUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.CriarProdutoUseCase;
 
 namespace SistemaControleProdutoEstoque.API.Controllers
@@ -13,11 +14,14 @@ namespace SistemaControleProdutoEstoque.API.Controllers
     {
         private readonly ICriarCategoriaUseCase  _criarCategoriaUseCase;
         private readonly IAlterarNomeCategoriaUseCase _alterarNomeCategoriaUseCase;
+        private readonly IBuscarCategoriaPorIdUseCase _buscarCategoriaPorIdUseCase;
         public CategoriasController(ICriarCategoriaUseCase criarCategoriaUseCase,
-            IAlterarNomeCategoriaUseCase alterarNomeCategoriaUseCase)
+            IAlterarNomeCategoriaUseCase alterarNomeCategoriaUseCase,
+            IBuscarCategoriaPorIdUseCase buscarCategoriaPorIdUseCase)
         {
             _criarCategoriaUseCase = criarCategoriaUseCase;
             _alterarNomeCategoriaUseCase = alterarNomeCategoriaUseCase;
+            _buscarCategoriaPorIdUseCase = buscarCategoriaPorIdUseCase;
         }
 
         [HttpPost]
@@ -49,7 +53,19 @@ namespace SistemaControleProdutoEstoque.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        [HttpGet("{id}")]
+        public async Task<IActionResult> BuscarCategoriaPorId(Guid id)
+        {
+            try
+            {
+                var resultado = await _buscarCategoriaPorIdUseCase.Executar(id);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
 
     }
