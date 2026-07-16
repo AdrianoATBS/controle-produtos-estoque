@@ -8,7 +8,7 @@ public interface ICategoriaRepository
     void AtualizarCategoria(Categoria categoria);
     void DeletarCategoria(Guid id);
    
-    IEnumerable<Categoria> ObterTodasCategorias();
+    Task<IEnumerable<Categoria>> ObterTodasCategoriasAsync();
     Categoria? ObterCategoriaId(Guid id);
     bool ExisteCategoriaComNome(string nome);
 

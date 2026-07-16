@@ -45,8 +45,10 @@ public class CategoriaRepository : ICategoriaRepository
         return _context.Categorias.FirstOrDefault(c => c.Id == id);
     }
 
-    public IEnumerable<Categoria> ObterTodasCategorias()
+
+
+    public async Task<IEnumerable<Categoria>> ObterTodasCategoriasAsync()
     {
-        return _context.Categorias.ToList();
+       return await _context.Categorias.ToListAsync();
     }
 }
