@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SistemaControleProdutosEstoque.Application.Requests.Categorias;
+using SistemaControleProdutosEstoque.Application.Responses.Categorias;
 using SistemaControleProdutosEstoque.Application.UseCases;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.AlterarNomeCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.BuscarCategoriaPorIdUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.CriarProdutoUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ListarTodasCategoria;
 
 namespace SistemaControleProdutoEstoque.API.Controllers
 {
@@ -15,13 +17,16 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         private readonly ICriarCategoriaUseCase  _criarCategoriaUseCase;
         private readonly IAlterarNomeCategoriaUseCase _alterarNomeCategoriaUseCase;
         private readonly IBuscarCategoriaPorIdUseCase _buscarCategoriaPorIdUseCase;
+        private readonly IListaTodasCategoriaUseCase _listaTodasCategoriaUseCase;
         public CategoriasController(ICriarCategoriaUseCase criarCategoriaUseCase,
             IAlterarNomeCategoriaUseCase alterarNomeCategoriaUseCase,
-            IBuscarCategoriaPorIdUseCase buscarCategoriaPorIdUseCase)
+            IBuscarCategoriaPorIdUseCase buscarCategoriaPorIdUseCase,
+            IListaTodasCategoriaUseCase listaTodasCategoriaUseCase)
         {
             _criarCategoriaUseCase = criarCategoriaUseCase;
             _alterarNomeCategoriaUseCase = alterarNomeCategoriaUseCase;
             _buscarCategoriaPorIdUseCase = buscarCategoriaPorIdUseCase;
+            _listaTodasCategoriaUseCase = listaTodasCategoriaUseCase;
         }
 
         [HttpPost]
@@ -59,6 +64,20 @@ namespace SistemaControleProdutoEstoque.API.Controllers
             try
             {
                 var resultado = await _buscarCategoriaPorIdUseCase.Executar(id);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListaTodasCategorias()
+        {
+            try
+            {
+                var resultado = await _listaTodasCategoriaUseCase.Executar();
                 return Ok(resultado);
             }
             catch (Exception ex)

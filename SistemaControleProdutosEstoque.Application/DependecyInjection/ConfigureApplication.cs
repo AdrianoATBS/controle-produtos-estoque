@@ -3,6 +3,7 @@ using SistemaControleProdutosEstoque.Application.UseCases;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.AlterarNomeCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.BuscarCategoriaPorIdUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.CriarProdutoUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ListarTodasCategoria;
 using SistemaControleProdutosEstoque.Application.Validators.Categorias;
 
 namespace SistemaControleProdutosEstoque.Application.DependecyInjection;
@@ -15,8 +16,8 @@ public static class ConfigureApplication
         services.AddScoped<ICriarCategoriaUseCase, CriarCategoriaUseCase>();
         services.AddScoped<AlterarNomeCategoriaRequestValidator>();
         services.AddScoped<IAlterarNomeCategoriaUseCase, AlterarNomeCategoriaUseCase>();
-        services.AddScoped<BuscarCategoriaPorIdRequestValidator>();
         services.AddScoped<IBuscarCategoriaPorIdUseCase, BuscarCategoriaPorIdUseCase>();
+        services.AddScoped<IListaTodasCategoriaUseCase, ListaTodasCategoriaUseCase>();
         return services;
     }
 }
