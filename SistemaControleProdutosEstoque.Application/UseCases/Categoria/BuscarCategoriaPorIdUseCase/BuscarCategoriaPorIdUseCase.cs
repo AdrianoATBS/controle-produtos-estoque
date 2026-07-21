@@ -16,21 +16,21 @@ public class BuscarCategoriaPorIdUseCase : IBuscarCategoriaPorIdUseCase
     {
         _categoriaRepository = categoriaRepository;
     }
-    public Task<BuscarCategoriaPorIdResponse> Executar(Guid id)
+    public async Task<BuscarCategoriaPorIdResponse> Executar(Guid id)
     {
         
-        var categoria = _categoriaRepository.ObterCategoriaId(id);
+        var categoria = await _categoriaRepository.ObterCategoriaIdAsync(id);
         if(categoria == null)
             throw new ValidationException("Categoria não encontrada.");
 
        
 
-        var response = new BuscarCategoriaPorIdResponse
+        return new BuscarCategoriaPorIdResponse
         {
             Nome = categoria.Nome,
             Ativo = categoria.Ativo,
             DataCadastro = categoria.DataCriacao.ToLocalTime().ToString("dd/MM/yyyy HH:mm:ss")
         };
-        return Task.FromResult(response);
+        
     }
 }
