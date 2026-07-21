@@ -4,6 +4,7 @@ using SistemaControleProdutosEstoque.Application.UseCases.Categoria.AlterarNomeC
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.BuscarCategoriaPorIdUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.CriarProdutoUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ListarTodasCategoria;
+using SistemaControleProdutosEstoque.Application.UseCases.DesativarCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.Validators.Categorias;
 
 namespace SistemaControleProdutosEstoque.Application.DependecyInjection;
@@ -18,6 +19,7 @@ public static class ConfigureApplication
         services.AddScoped<IAlterarNomeCategoriaUseCase, AlterarNomeCategoriaUseCase>();
         services.AddScoped<IBuscarCategoriaPorIdUseCase, BuscarCategoriaPorIdUseCase>();
         services.AddScoped<IListaTodasCategoriaUseCase, ListaTodasCategoriaUseCase>();
+        services.AddScoped<IDesativarCategoriaUseCase, DesativarCategoriaUseCase>();
         return services;
     }
 }

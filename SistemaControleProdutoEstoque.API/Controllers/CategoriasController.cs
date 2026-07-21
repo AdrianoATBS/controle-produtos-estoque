@@ -7,6 +7,7 @@ using SistemaControleProdutosEstoque.Application.UseCases.Categoria.AlterarNomeC
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.BuscarCategoriaPorIdUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.CriarProdutoUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ListarTodasCategoria;
+using SistemaControleProdutosEstoque.Application.UseCases.DesativarCategoriaUseCase;
 
 namespace SistemaControleProdutoEstoque.API.Controllers
 {
@@ -18,15 +19,18 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         private readonly IAlterarNomeCategoriaUseCase _alterarNomeCategoriaUseCase;
         private readonly IBuscarCategoriaPorIdUseCase _buscarCategoriaPorIdUseCase;
         private readonly IListaTodasCategoriaUseCase _listaTodasCategoriaUseCase;
+        private readonly IDesativarCategoriaUseCase _desativarCategoriaUseCase;
         public CategoriasController(ICriarCategoriaUseCase criarCategoriaUseCase,
             IAlterarNomeCategoriaUseCase alterarNomeCategoriaUseCase,
             IBuscarCategoriaPorIdUseCase buscarCategoriaPorIdUseCase,
-            IListaTodasCategoriaUseCase listaTodasCategoriaUseCase)
+            IListaTodasCategoriaUseCase listaTodasCategoriaUseCase,
+            IDesativarCategoriaUseCase desativarCategoriaUseCase)
         {
             _criarCategoriaUseCase = criarCategoriaUseCase;
             _alterarNomeCategoriaUseCase = alterarNomeCategoriaUseCase;
             _buscarCategoriaPorIdUseCase = buscarCategoriaPorIdUseCase;
             _listaTodasCategoriaUseCase = listaTodasCategoriaUseCase;
+            _desativarCategoriaUseCase = desativarCategoriaUseCase;
         }
 
         [HttpPost]
@@ -85,7 +89,21 @@ namespace SistemaControleProdutoEstoque.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut]
+        [Route("{id}/desativar")]
+        public async Task<IActionResult> DesativarCategoria(Guid id)
+        {
+            try
+            {
+                await _desativarCategoriaUseCase.Executar(id);
+                return Ok(new { mensagem = "Categoria desativada com sucesso"});
 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
     }
 }
