@@ -23,7 +23,7 @@ public class AlterarNomeCategoriaUseCase : IAlterarNomeCategoriaUseCase
         if (!resultadoValidacao.IsValid)
             throw new ValidationException(resultadoValidacao.Errors);
         
-        var categoria = _categoriaRepository.ObterCategoriaId(id);
+        var categoria = await _categoriaRepository.ObterCategoriaIdAsync(id);
         if(categoria == null)
                throw new KeyNotFoundException("Categoria não encontrada.");
         
