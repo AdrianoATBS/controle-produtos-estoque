@@ -40,15 +40,17 @@ public class CategoriaRepository : ICategoriaRepository
     
     }
 
-    public Categoria? ObterCategoriaId(Guid id)
-    {
-        return _context.Categorias.FirstOrDefault(c => c.Id == id);
-    }
-
 
 
     public async Task<IEnumerable<Categoria>> ObterTodasCategoriasAsync()
     {
        return await _context.Categorias.ToListAsync();
+    }
+
+   
+
+    async Task<Categoria?> ICategoriaRepository.ObterCategoriaIdAsync(Guid id)
+    {
+        return await _context.Categorias.FirstOrDefaultAsync(c => c.Id == id);
     }
 }

@@ -9,7 +9,7 @@ public interface ICategoriaRepository
     void DeletarCategoria(Guid id);
    
     Task<IEnumerable<Categoria>> ObterTodasCategoriasAsync();
-    Categoria? ObterCategoriaId(Guid id);
+    Task<Categoria?> ObterCategoriaIdAsync(Guid id);
     bool ExisteCategoriaComNome(string nome);
 
 }
