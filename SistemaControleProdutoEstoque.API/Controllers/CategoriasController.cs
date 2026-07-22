@@ -6,6 +6,7 @@ using SistemaControleProdutosEstoque.Application.UseCases;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.AlterarNomeCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.BuscarCategoriaPorIdUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.CriarProdutoUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Categoria.DeletarCategoria;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.DesativarCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ListarTodasCategoria;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ReativarCategoriaUseCase;
@@ -22,12 +23,14 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         private readonly IListaTodasCategoriaUseCase _listaTodasCategoriaUseCase;
         private readonly IDesativarCategoriaUseCase _desativarCategoriaUseCase;
         private readonly IReativarCategoriaUseCase _reativarCategoriaUseCase;
+        private readonly IDeletarCategoriaUseCase _deletarCategoriaUseCase;
         public CategoriasController(ICriarCategoriaUseCase criarCategoriaUseCase,
             IAlterarNomeCategoriaUseCase alterarNomeCategoriaUseCase,
             IBuscarCategoriaPorIdUseCase buscarCategoriaPorIdUseCase,
             IListaTodasCategoriaUseCase listaTodasCategoriaUseCase,
             IDesativarCategoriaUseCase desativarCategoriaUseCase,
-            IReativarCategoriaUseCase reativarCategoriaUseCase)
+            IReativarCategoriaUseCase reativarCategoriaUseCase,
+            IDeletarCategoriaUseCase deletarCategoriaUseCase)
         {
             _criarCategoriaUseCase = criarCategoriaUseCase;
             _alterarNomeCategoriaUseCase = alterarNomeCategoriaUseCase;
@@ -35,6 +38,7 @@ namespace SistemaControleProdutoEstoque.API.Controllers
             _listaTodasCategoriaUseCase = listaTodasCategoriaUseCase;
             _desativarCategoriaUseCase = desativarCategoriaUseCase;
             _reativarCategoriaUseCase = reativarCategoriaUseCase;
+            _deletarCategoriaUseCase = deletarCategoriaUseCase;
         }
 
         [HttpPost]
@@ -116,6 +120,20 @@ namespace SistemaControleProdutoEstoque.API.Controllers
             {
                 await _reativarCategoriaUseCase.Executar(id);
                 return Ok(new { message = "Categoria reativada com sucesso" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete]
+        [Route("{id}/deletar")]
+        public async Task<IActionResult> DeletarCategoria(Guid id)
+        {
+            try
+            {
+                await _deletarCategoriaUseCase.Executar(id);
+                return Ok(new { message = "Categoria deletada com sucesso" });
             }
             catch (Exception ex)
             {
