@@ -51,6 +51,7 @@ public class CategoriaRepository : ICategoriaRepository
 
     async Task<Categoria?> ICategoriaRepository.ObterCategoriaIdAsync(Guid id)
     {
-        return await _context.Categorias.FirstOrDefaultAsync(c => c.Id == id);
+        return await _context.Categorias.Include(c => c.Produtos)
+            .FirstOrDefaultAsync(c => c.Id == id);
     }
 }
