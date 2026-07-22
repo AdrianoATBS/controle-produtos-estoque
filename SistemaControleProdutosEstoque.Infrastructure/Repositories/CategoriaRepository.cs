@@ -12,31 +12,31 @@ public class CategoriaRepository : ICategoriaRepository
     {
         _context = context;
     }
-    public void AdicionarCategoria(Categoria categoria)
+    public async Task AdicionarCategoriaAsync(Categoria categoria)
     {
         _context.Categorias.Add(categoria);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public void AtualizarCategoria(Categoria categoria)
+    public async Task AtualizarCategoriaAsync(Categoria categoria)
     {
         _context.Categorias.Update(categoria);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public void DeletarCategoria(Guid id)
+    public async Task DeletarCategoriaAsync(Guid id)
     {
         var categoria = _context.Categorias.FirstOrDefault(c => c.Id == id);
         if (categoria != null)
         {
             _context.Categorias.Remove(categoria);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
      }
 
-    public bool ExisteCategoriaComNome(string nome)
+    public async Task<bool> ExisteCategoriaComNomeAsync(string nome)
     {
-       return  _context.Categorias.Any(c => c.Nome == nome);
+       return  await _context.Categorias.AnyAsync(c => c.Nome == nome);
     
     }
 

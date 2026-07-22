@@ -22,13 +22,13 @@ public class CriarCategoriaUseCase : ICriarCategoriaUseCase
         if (!resultadoValidacao.IsValid)
             throw new ValidationException(resultadoValidacao.Errors);
 
-        var jaExiste = _categoriaRepository.ExisteCategoriaComNome(request.Nome);
+        var jaExiste = await _categoriaRepository.ExisteCategoriaComNomeAsync(request.Nome);
         if(jaExiste)
                 throw new InvalidOperationException("Já existe uma categoria com o mesmo nome.");
 
         var novaCategoria = Domain.Entities.Categoria.Criar(request.Nome);
 
-        _categoriaRepository.AdicionarCategoria(novaCategoria);
+        await _categoriaRepository.AdicionarCategoriaAsync(novaCategoria);
         
         var response = new CriarCategoriaResponse
         {

@@ -27,13 +27,13 @@ public class AlterarNomeCategoriaUseCase : IAlterarNomeCategoriaUseCase
         if(categoria == null)
                throw new KeyNotFoundException("Categoria não encontrada.");
         
-        var jaExiste = _categoriaRepository.ExisteCategoriaComNome(request.NovoNome);
+        var jaExiste = await _categoriaRepository.ExisteCategoriaComNomeAsync(request.NovoNome);
         if(jaExiste)
             throw new InvalidOperationException("Já existe uma categoria com esse nome.");
 
         categoria.AlterarNome(request.NovoNome);
 
-        _categoriaRepository.AtualizarCategoria(categoria);
+        await _categoriaRepository.AtualizarCategoriaAsync(categoria);
 
         return new AlterarNomeCategoriaResponse
         {

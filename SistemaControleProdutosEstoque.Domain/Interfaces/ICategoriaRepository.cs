@@ -4,12 +4,13 @@ namespace SistemaControleProdutosEstoque.Domain.Interfaces;
 
 public interface ICategoriaRepository
 {
-    void AdicionarCategoria(Categoria categoria);
-    void AtualizarCategoria(Categoria categoria);
-    void DeletarCategoria(Guid id);
+   
+    Task AdicionarCategoriaAsync(Categoria categoria);
+    Task AtualizarCategoriaAsync(Categoria categoria);
+    Task DeletarCategoriaAsync(Guid id);
    
     Task<IEnumerable<Categoria>> ObterTodasCategoriasAsync();
     Task<Categoria?> ObterCategoriaIdAsync(Guid id);
-    bool ExisteCategoriaComNome(string nome);
+    Task<bool> ExisteCategoriaComNomeAsync(string nome);
 
 }

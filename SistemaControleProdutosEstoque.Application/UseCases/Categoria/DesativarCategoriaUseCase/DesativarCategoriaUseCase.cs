@@ -18,7 +18,7 @@ public class DesativarCategoriaUseCase : IDesativarCategoriaUseCase
             throw new ArgumentException("Categoria não encontrada");
 
         categoria.Desativar();
-        _repository.AtualizarCategoria(categoria);
+        await _repository.AtualizarCategoriaAsync(categoria);
       
        
        

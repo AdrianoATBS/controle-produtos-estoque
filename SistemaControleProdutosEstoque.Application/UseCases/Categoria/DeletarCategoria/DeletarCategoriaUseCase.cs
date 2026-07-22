@@ -23,7 +23,7 @@ public class DeletarCategoriaUseCase : IDeletarCategoriaUseCase
         if(categoria.Produtos != null && categoria.Produtos.Any())
                 throw new ArgumentException("Não é possível deletar uma categoria que possui produtos associados");
 
-        _repository.DeletarCategoria(id);
+        await _repository.DeletarCategoriaAsync(id);
 
     }
 }

@@ -16,6 +16,6 @@ public class ReativarCategoriaUseCase : IReativarCategoriaUseCase
                 throw new ArgumentException("Categoria não encontrada");
         categoria.Ativar();
 
-        _repository.AtualizarCategoria(categoria);
+        await _repository.AtualizarCategoriaAsync(categoria);
     }
 }
