@@ -17,6 +17,7 @@ public static class ConfigureInfrastructure
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+        services.AddScoped<IProdutoRepository, ProdutoRepository>();
         return services;
     }
 }

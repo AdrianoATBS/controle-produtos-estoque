@@ -7,7 +7,9 @@ using SistemaControleProdutosEstoque.Application.UseCases.Categoria.DeletarCateg
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.DesativarCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ListarTodasCategoria;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ReativarCategoriaUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Produtos.CriarProdutoUseCase;
 using SistemaControleProdutosEstoque.Application.Validators.Categorias;
+using SistemaControleProdutosEstoque.Application.Validators.Produtos;
 
 namespace SistemaControleProdutosEstoque.Application.DependecyInjection;
 
@@ -24,6 +26,9 @@ public static class ConfigureApplication
         services.AddScoped<IDesativarCategoriaUseCase, DesativarCategoriaUseCase>();
         services.AddScoped<IReativarCategoriaUseCase, ReativarCategoriaUseCase>();
         services.AddScoped<IDeletarCategoriaUseCase, DeletarCategoriaUseCase>();
+
+        services.AddScoped<ICriarProdutoUseCase, CriarProdutoUseCase>();
+        services.AddScoped<CriarProdutoRequestValidator>();
         return services;
     }
 }
