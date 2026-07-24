@@ -24,7 +24,7 @@ public class Produto
         CategoriaId = categoria.Id;
         Categoria = categoria;
         Ativo = true;
-        DataCriacao = DateTime.UtcNow;
+        DataCriacao = DateTime.Now;
     }
     public static Produto Criar(string nome, string descricao, decimal preco,
         int quantidadeEsotque, Categoria? categoria)
