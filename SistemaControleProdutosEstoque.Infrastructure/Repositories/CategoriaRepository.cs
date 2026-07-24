@@ -36,11 +36,11 @@ public class CategoriaRepository : ICategoriaRepository
 
     public async Task<bool> ExisteCategoriaComNomeAsync(string nome)
     {
-       return  await _context.Categorias.AnyAsync(c => c.Nome == nome);
-    
+        if (string.IsNullOrWhiteSpace(nome)) return false;
+
+        return await _context.Categorias.AnyAsync(c => c.Nome.ToLower() == nome.ToLower());
+
     }
-
-
 
     public async Task<IEnumerable<Categoria>> ObterTodasCategoriasAsync()
     {
