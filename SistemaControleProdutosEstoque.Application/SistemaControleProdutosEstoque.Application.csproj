@@ -8,12 +8,9 @@
 
   <ItemGroup>
     <Folder Include="Requests\Estoque\" />
-    <Folder Include="Requests\Produto\" />
     <Folder Include="Services\" />
     <Folder Include="UseCases\Estoque\" />
-    <Folder Include="UseCases\Produtos\" />
     <Folder Include="Validators\Estoque\" />
-    <Folder Include="Validators\Produtos\" />
   </ItemGroup>
 
   <ItemGroup>
