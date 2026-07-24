@@ -4,16 +4,16 @@ namespace SistemaControleProdutosEstoque.Domain.Interfaces;
 
 public interface IProdutoRepository
 {
-    void AdicionarProduto(Produto produto);
-    void AtualizarProduto(Produto produto);
-    void DeletarProduto(Guid id);
-    bool ExisteProdutoComNome(string nome);
-    bool ExisteProdutoNaCategoria(Guid categoriaId);
+    Task AdicionarProdutoAsync(Produto produto);
+    Task AtualizarProdutoAsync(Produto produto);
+    Task DeletarProdutoAsync(Guid id);
+    Task<bool> ExisteProdutoComNomeAsync(string nome);
+    Task<bool> ExisteProdutoNaCategoriaAsync(Guid categoriaId);
 
-    IEnumerable<Produto> ObterTodosOsProdutos();
-    IEnumerable<Produto> ObterProdutosPorCategoria(Guid categoriaId);
-    Produto? ObterProdutoId(Guid id);
+    Task<IEnumerable<Produto>> ObterTodosOsProdutosAsync();
+    Task<IEnumerable<Produto>> ObterProdutosPorCategoriaAsync(Guid categoriaId);
+    Task<Produto?> ObterProdutoIdAsync(Guid id);
     
-    IEnumerable<Produto> ObterProdutosPorNome(string nome);
+    Task<IEnumerable<Produto>> ObterProdutosPorNomeAsync(string nome);
 
 }
