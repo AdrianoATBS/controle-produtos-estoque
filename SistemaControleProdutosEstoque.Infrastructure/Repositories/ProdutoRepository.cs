@@ -54,7 +54,8 @@ public class ProdutoRepository : IProdutoRepository
 
     public async Task<IEnumerable<Produto>> ObterProdutosPorCategoriaAsync(Guid categoriaId)
     {
-        return await _context.Produtos.Where(p => p.CategoriaId == categoriaId).ToListAsync();
+        return await _context.Produtos.Include(p => p.Categoria)
+            .Where(p => p.CategoriaId == categoriaId).ToListAsync();
     }
 
     public async Task<IEnumerable<Produto>> ObterProdutosPorNomeAsync(string nome)
@@ -64,6 +65,7 @@ public class ProdutoRepository : IProdutoRepository
 
     public async Task<IEnumerable<Produto>> ObterTodosOsProdutosAsync()
     {
-       return await _context.Produtos.ToListAsync();
+       return await _context.Produtos.Include(p => p.Categoria)
+            .ToListAsync();
     }
 }

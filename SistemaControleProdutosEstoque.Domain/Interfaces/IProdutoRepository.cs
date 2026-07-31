@@ -11,6 +11,7 @@ public interface IProdutoRepository
     Task<bool> ExisteProdutoNaCategoriaAsync(Guid categoriaId);
 
     Task<IEnumerable<Produto>> ObterTodosOsProdutosAsync();
+
     Task<IEnumerable<Produto>> ObterProdutosPorCategoriaAsync(Guid categoriaId);
     Task<Produto?> ObterProdutoIdAsync(Guid id);
     

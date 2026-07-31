@@ -5,6 +5,7 @@ using SistemaControleProdutosEstoque.Application.Requests.Produto;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.AlterarNomeDoProduto;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.BuscarProdutoPorIdUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.CriarProdutoUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Produtos.ListarTodosOsProdutosUseCase;
 
 namespace SistemaControleProdutoEstoque.API.Controllers
 {
@@ -15,12 +16,15 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         private readonly ICriarProdutoUseCase _criarProdutoUseCase;
         private readonly IAlterarProdutoUseCase _alterarProdutoUseCase;
         private readonly IBuscarProdutoPorIdUseCase _buscarProdutoPorIdUseCase;
+        private readonly IListarTodosOsProdutosUseCase _listarTodosOsProdutosUseCase;
         public ProdutosController(ICriarProdutoUseCase criarProdutoUseCase,
-            IAlterarProdutoUseCase alterarProdutoUseCase, IBuscarProdutoPorIdUseCase buscarProdutoPorIdUseCase)
+            IAlterarProdutoUseCase alterarProdutoUseCase, IBuscarProdutoPorIdUseCase
+            buscarProdutoPorIdUseCase, IListarTodosOsProdutosUseCase listarTodosOsProdutosUseCase)
         {
             _criarProdutoUseCase = criarProdutoUseCase;
             _alterarProdutoUseCase = alterarProdutoUseCase;
             _buscarProdutoPorIdUseCase = buscarProdutoPorIdUseCase;
+            _listarTodosOsProdutosUseCase = listarTodosOsProdutosUseCase;
         }
         [HttpPost]
         public async Task<IActionResult> CriarProduto(CriarProdutoRequest request)
@@ -56,6 +60,20 @@ namespace SistemaControleProdutoEstoque.API.Controllers
             {
                 var produto = await _buscarProdutoPorIdUseCase.Executar(id);
                 return (Ok(new { message = "Produto encontrado", data = produto }));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> ListarTodasOsProdutos()
+        {
+            try
+            {
+                var produtos = await _listarTodosOsProdutosUseCase.Executar();
+
+                return Ok(new { message = "Produtos encontrados", data = produtos });
             }
             catch (Exception ex)
             {
