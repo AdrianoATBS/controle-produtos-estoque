@@ -35,8 +35,7 @@ public class AlterarProdutoUseCase : IAlterarProdutoUseCase
             Id = id,
             Nome = request.NovoNome,
             Descricao = request.NovaDescricao,
-            Preco = request.NovoPreco,
-            QuantidadeEstoque = request.NovoEstoque
+            Preco = request.NovoPreco
         };
     }
 }

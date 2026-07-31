@@ -17,8 +17,7 @@ public class AlterarProdutoRequestValidator : AbstractValidator<AlterarProdutoRe
             .MaximumLength(500).WithMessage("A descrição do produto deve ter no máximo 500 caracteres");
         RuleFor(request => request.NovoPreco)
             .GreaterThan(0).WithMessage("O preço do produto deve ser maior que zero.");
-        RuleFor(request => request.NovoEstoque)
-            .GreaterThanOrEqualTo(0).WithMessage("A quantidade em estoque do produto deve ser maior ou igual a zero.");
+      
     }
 
         
