@@ -48,7 +48,8 @@ public class ProdutoRepository : IProdutoRepository
 
     public async Task<Produto?> ObterProdutoIdAsync(Guid id)
     {
-        return await _context.Produtos.FirstOrDefaultAsync(p => p.Id == id);
+        return await _context.Produtos.Include(p => p.Categoria)
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<IEnumerable<Produto>> ObterProdutosPorCategoriaAsync(Guid categoriaId)
