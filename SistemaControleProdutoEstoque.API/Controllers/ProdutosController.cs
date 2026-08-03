@@ -7,6 +7,7 @@ using SistemaControleProdutosEstoque.Application.UseCases.Produtos.BuscarProduto
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.CriarProdutoUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.DesativarCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.ListarTodosOsProdutosUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Produtos.ReativarProdutoUseCase;
 
 namespace SistemaControleProdutoEstoque.API.Controllers
 {
@@ -19,16 +20,18 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         private readonly IBuscarProdutoPorIdUseCase _buscarProdutoPorIdUseCase;
         private readonly IListarTodosOsProdutosUseCase _listarTodosOsProdutosUseCase;
         private readonly IDesativarProdutoUseCase _desativarProdutoUseCase;
+        private readonly IReativarProdutoUseCase _reativarProdutoUseCase;
         public ProdutosController(ICriarProdutoUseCase criarProdutoUseCase,
             IAlterarProdutoUseCase alterarProdutoUseCase, IBuscarProdutoPorIdUseCase
             buscarProdutoPorIdUseCase, IListarTodosOsProdutosUseCase listarTodosOsProdutosUseCase,
-            IDesativarProdutoUseCase desativarProdutoUseCase)
+            IDesativarProdutoUseCase desativarProdutoUseCase, IReativarProdutoUseCase reativarProdutoUseCase)
         {
             _criarProdutoUseCase = criarProdutoUseCase;
             _alterarProdutoUseCase = alterarProdutoUseCase;
             _buscarProdutoPorIdUseCase = buscarProdutoPorIdUseCase;
             _listarTodosOsProdutosUseCase = listarTodosOsProdutosUseCase;
             _desativarProdutoUseCase = desativarProdutoUseCase;
+            _reativarProdutoUseCase = reativarProdutoUseCase;
         }
         [HttpPost]
         public async Task<IActionResult> CriarProduto(CriarProdutoRequest request)
@@ -92,6 +95,20 @@ namespace SistemaControleProdutoEstoque.API.Controllers
             {
                 await _desativarProdutoUseCase.Executar(id);
                 return Ok(new { message = "Produto desativado com sucesso"});
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut]
+        [Route("{id}/reativar")]
+        public async Task<IActionResult> ReativarProduto(Guid id)
+        {
+            try
+            {
+                await _reativarProdutoUseCase.Executar(id);
+                return Ok(new { message = "Produto reativado com sucesso" });
             }
             catch (Exception ex)
             {
