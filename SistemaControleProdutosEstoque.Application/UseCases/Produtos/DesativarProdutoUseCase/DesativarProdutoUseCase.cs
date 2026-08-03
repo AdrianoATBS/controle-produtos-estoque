@@ -1,6 +1,6 @@
 ﻿using SistemaControleProdutosEstoque.Domain.Interfaces;
 
-namespace SistemaControleProdutosEstoque.Application.UseCases.Produtos.DesativarCategoriaUseCase;
+namespace SistemaControleProdutosEstoque.Application.UseCases.Produtos.DesativarProdutoUseCase;
 
 public class DesativarProdutoUseCase : IDesativarProdutoUseCase
 {

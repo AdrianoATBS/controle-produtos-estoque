@@ -1,4 +1,4 @@
-﻿namespace SistemaControleProdutosEstoque.Application.UseCases.Produtos.DesativarCategoriaUseCase;
+﻿namespace SistemaControleProdutosEstoque.Application.UseCases.Produtos.DesativarProdutoUseCase;
 
 public interface IDesativarProdutoUseCase
 {
