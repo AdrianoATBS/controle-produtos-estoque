@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SistemaControleProdutosEstoque.Application.Requests.Categorias;
+﻿using Microsoft.AspNetCore.Mvc;
 using SistemaControleProdutosEstoque.Application.Requests.Produto;
+using SistemaControleProdutosEstoque.Application.UseCases.Categoria.DeletarCategoria;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.AlterarNomeDoProduto;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.BuscarProdutoPorIdUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.CriarProdutoUseCase;
-using SistemaControleProdutosEstoque.Application.UseCases.Produtos.DesativarCategoriaUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Produtos.DeletarProdutoUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Produtos.DesativarProdutoUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.ListarTodosOsProdutosUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.ReativarProdutoUseCase;
 
@@ -21,10 +21,12 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         private readonly IListarTodosOsProdutosUseCase _listarTodosOsProdutosUseCase;
         private readonly IDesativarProdutoUseCase _desativarProdutoUseCase;
         private readonly IReativarProdutoUseCase _reativarProdutoUseCase;
+        private readonly IDeletarProdutoUseCase _deletarProdutoUseCase;
         public ProdutosController(ICriarProdutoUseCase criarProdutoUseCase,
             IAlterarProdutoUseCase alterarProdutoUseCase, IBuscarProdutoPorIdUseCase
             buscarProdutoPorIdUseCase, IListarTodosOsProdutosUseCase listarTodosOsProdutosUseCase,
-            IDesativarProdutoUseCase desativarProdutoUseCase, IReativarProdutoUseCase reativarProdutoUseCase)
+            IDesativarProdutoUseCase desativarProdutoUseCase, 
+            IReativarProdutoUseCase reativarProdutoUseCase, IDeletarProdutoUseCase deletarProdutoUseCase)
         {
             _criarProdutoUseCase = criarProdutoUseCase;
             _alterarProdutoUseCase = alterarProdutoUseCase;
@@ -32,6 +34,7 @@ namespace SistemaControleProdutoEstoque.API.Controllers
             _listarTodosOsProdutosUseCase = listarTodosOsProdutosUseCase;
             _desativarProdutoUseCase = desativarProdutoUseCase;
             _reativarProdutoUseCase = reativarProdutoUseCase;
+            _deletarProdutoUseCase = deletarProdutoUseCase;
         }
         [HttpPost]
         public async Task<IActionResult> CriarProduto(CriarProdutoRequest request)
@@ -87,8 +90,8 @@ namespace SistemaControleProdutoEstoque.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
-        [Route("{id}/desativar")]
+        [HttpPut("{id}/desativar")]
+      
         public async Task<IActionResult> DesativarProduto(Guid id)
         {
             try
@@ -101,14 +104,26 @@ namespace SistemaControleProdutoEstoque.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
-        [Route("{id}/reativar")]
+        [HttpPut("{id}/reativar")]
         public async Task<IActionResult> ReativarProduto(Guid id)
         {
             try
             {
                 await _reativarProdutoUseCase.Executar(id);
                 return Ok(new { message = "Produto reativado com sucesso" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletarProduto(Guid id)
+        {
+            try
+            {
+                await _deletarProdutoUseCase.Executar(id);
+                return Ok(new { message = "Produto deletado com sucesso" });
             }
             catch (Exception ex)
             {
