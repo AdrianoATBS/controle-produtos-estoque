@@ -3,6 +3,7 @@ using SistemaControleProdutosEstoque.Application.Requests.Produto;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.DeletarCategoria;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.AlterarNomeDoProduto;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.BuscarProdutoPorIdUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Produtos.BuscarProdutosPorCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.CriarProdutoUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.DeletarProdutoUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.DesativarProdutoUseCase;
@@ -22,11 +23,13 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         private readonly IDesativarProdutoUseCase _desativarProdutoUseCase;
         private readonly IReativarProdutoUseCase _reativarProdutoUseCase;
         private readonly IDeletarProdutoUseCase _deletarProdutoUseCase;
+        private readonly IBuscarProdutosPorCategoriaUseCase _buscarProdutosPorCategoriaUseCase;
         public ProdutosController(ICriarProdutoUseCase criarProdutoUseCase,
             IAlterarProdutoUseCase alterarProdutoUseCase, IBuscarProdutoPorIdUseCase
             buscarProdutoPorIdUseCase, IListarTodosOsProdutosUseCase listarTodosOsProdutosUseCase,
             IDesativarProdutoUseCase desativarProdutoUseCase, 
-            IReativarProdutoUseCase reativarProdutoUseCase, IDeletarProdutoUseCase deletarProdutoUseCase)
+            IReativarProdutoUseCase reativarProdutoUseCase, IDeletarProdutoUseCase deletarProdutoUseCase,
+            IBuscarProdutosPorCategoriaUseCase buscarProdutosPorCategoriaUseCase)
         {
             _criarProdutoUseCase = criarProdutoUseCase;
             _alterarProdutoUseCase = alterarProdutoUseCase;
@@ -35,6 +38,8 @@ namespace SistemaControleProdutoEstoque.API.Controllers
             _desativarProdutoUseCase = desativarProdutoUseCase;
             _reativarProdutoUseCase = reativarProdutoUseCase;
             _deletarProdutoUseCase = deletarProdutoUseCase;
+            _buscarProdutosPorCategoriaUseCase = buscarProdutosPorCategoriaUseCase;
+
         }
         [HttpPost]
         public async Task<IActionResult> CriarProduto(CriarProdutoRequest request)
@@ -130,6 +135,19 @@ namespace SistemaControleProdutoEstoque.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        [HttpGet("categoria/{categoriaId}")]
+        public async Task<IActionResult> BuscarProdutosPorCategoriaResponse(Guid categoriaId)
+        {
+            try
+            {
+                var produtos = await _buscarProdutosPorCategoriaUseCase.Executar(categoriaId);
+                return Ok(new { message = "Produtos encontrados", data = produtos });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
     }
 }

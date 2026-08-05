@@ -27,7 +27,7 @@ public class BuscarProdutoPorIdUseCase : IBuscarProdutoPorIdUseCase
             Nome = produto.Nome,
             Descricao = produto.Descricao,
             Ativo = produto.Ativo,
-            NomeCategoria = produto.Categoria.Nome,
+            NomeCategoria = produto.Categoria.Nome, 
             DataCriacao = produto.DataCriacao
         };
 
