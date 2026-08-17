@@ -19,7 +19,7 @@ public class MovimentacaoEstoque
         Produto = produto;
         Tipo = tipo;
         Quantidade = quantidade;
-        DataMovimentacao = DateTime.UtcNow;
+        DataMovimentacao = DateTime.Now;
     }
     public static MovimentacaoEstoque Criar(Produto? produto, TipoMovimentacao tipo, int quantidade)
     {
@@ -27,7 +27,10 @@ public class MovimentacaoEstoque
         ValidarQuantidade(quantidade);
         ValidarRegrasEstoque(produto!, tipo, quantidade);
         return new MovimentacaoEstoque(produto!, tipo, quantidade);
+
     }
+
+    
     
     private static void ValidarProduto(Produto? produto)
     {
