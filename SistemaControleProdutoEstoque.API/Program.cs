@@ -12,7 +12,7 @@ builder.Services.AddControllers()
 
             options.JsonSerializerOptions.WriteIndented = true;
         });
-
+builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
