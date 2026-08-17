@@ -1,12 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaControleProdutosEstoque.Domain.Entities;
+using SistemaControleProdutosEstoque.Domain.Interfaces;
+using SistemaControleProdutosEstoque.Infrastructure.Data;
 
-namespace SistemaControleProdutosEstoque.Infrastructure.Repositories
+namespace SistemaControleProdutosEstoque.Infrastructure.Repositories;
+
+public class MovimentacaoEstoqueRepository : IMovimentacaoEstoqueRepository
 {
-    internal class MovimentacaoEstoqueRepository
+    private readonly ApplicationDbContext _context;
+    public MovimentacaoEstoqueRepository(ApplicationDbContext context)
     {
+        _context = context;
+    }
+    public async Task<MovimentacaoEstoque?> ObterMovimentacaoAsync(Guid id)
+    {
+        return await _context.MovimentacoesEstoque.Include(p => p.Produto)
+            .FirstOrDefaultAsync(mov => mov.Id == id);
+    }
+
+    public async Task<IEnumerable<MovimentacaoEstoque>> ObterTodasMovimentacoesAsync()
+    {
+        return await _context.MovimentacoesEstoque.Include(p => p.Produto)
+            .ToListAsync();
+    }
+
+    public async Task<MovimentacaoEstoque?> ObterUltimaMovimentacaoPorProdutoAsync(Guid produtoId)
+    {
+        return await _context.MovimentacoesEstoque.Include(p => p.Produto)
+            .Where(mov => mov.ProdutoId == produtoId)
+            .OrderByDescending(mov => mov.DataMovimentacao)
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task RegistrarMovimentacaoEstoqueAsync(MovimentacaoEstoque movimentacaoEstoque)
+    {
+        _context.MovimentacoesEstoque.Add(movimentacaoEstoque);
+        await _context.SaveChangesAsync();
     }
 }
