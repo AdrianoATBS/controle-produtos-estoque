@@ -135,7 +135,7 @@ namespace SistemaControleProdutoEstoque.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("categoria/{categoriaId}")]
+        [HttpGet("buscar-categoria/{categoriaId}")]
         public async Task<IActionResult> BuscarProdutosPorCategoriaResponse(Guid categoriaId)
         {
             try
