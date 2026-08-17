@@ -71,6 +71,21 @@ public class Produto
             throw new InvalidOperationException("O produto já está ativado.");
         Ativo = true;
     }
+    public void AdicionarEstoque(int quantidade)
+    {
+        if (quantidade <= 0)
+            throw new ArgumentException("Quantidade inválida");
+      
+        QuantidadeEstoque += quantidade;
+    }
+    public void RemoverEstoque(int quantidade)
+    {
+        if (quantidade < 0)
+            throw new ArgumentException("Quantidade inválida");
+        if (QuantidadeEstoque < quantidade)
+            throw new InvalidOperationException("Estoque insuficiente");
+        QuantidadeEstoque -= quantidade;
+    }
   
 
 }
