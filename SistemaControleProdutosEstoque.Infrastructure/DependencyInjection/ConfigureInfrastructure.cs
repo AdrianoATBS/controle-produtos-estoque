@@ -18,6 +18,7 @@ public static class ConfigureInfrastructure
 
         services.AddScoped<ICategoriaRepository, CategoriaRepository>();
         services.AddScoped<IProdutoRepository, ProdutoRepository>();
+        services.AddScoped<IMovimentacaoEstoqueRepository, MovimentacaoEstoqueRepository>();
         return services;
     }
 }

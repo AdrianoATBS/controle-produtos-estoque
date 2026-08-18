@@ -7,6 +7,7 @@ using SistemaControleProdutosEstoque.Application.UseCases.Categoria.DeletarCateg
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.DesativarCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ListarTodasCategoria;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ReativarCategoriaUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Estoque.AdicionarEstoqueUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.AlterarNomeDoProduto;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.BuscarProdutoPorIdUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.BuscarProdutosPorCategoriaUseCase;
@@ -44,6 +45,8 @@ public static class ConfigureApplication
         services.AddScoped<IReativarProdutoUseCase, ReativarProdutoUseCase>();
         services.AddScoped<IDeletarProdutoUseCase, DeletarProdutoUseCase>();
         services.AddScoped<IBuscarProdutosPorCategoriaUseCase, BuscarProdutosPorCategoriaUseCase>();
+
+        services.AddScoped<IAdicionarEstoqueUseCase, AdicionarEstoqueUseCase>();
         return services;
     }
 }
