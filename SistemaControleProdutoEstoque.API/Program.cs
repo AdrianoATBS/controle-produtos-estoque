@@ -1,5 +1,7 @@
 using SistemaControleProdutosEstoque.Application.DependecyInjection;
 using SistemaControleProdutosEstoque.Infrastructure.DependencyInjection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +10,7 @@ builder.Services.AddControllers()
         .AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.Converters.Add(
-                new System.Text.Json.Serialization.JsonStringEnumConverter());
+                new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: true));
 
             options.JsonSerializerOptions.WriteIndented = true;
         });
