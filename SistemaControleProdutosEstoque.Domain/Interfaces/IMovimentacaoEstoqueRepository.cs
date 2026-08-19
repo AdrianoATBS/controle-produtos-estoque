@@ -8,6 +8,6 @@ public interface IMovimentacaoEstoqueRepository
     Task<MovimentacaoEstoque?> ObterMovimentacaoAsync(Guid id);
     Task<IEnumerable<MovimentacaoEstoque>> ObterTodasMovimentacoesAsync();
     Task<MovimentacaoEstoque?> ObterUltimaMovimentacaoPorProdutoAsync(Guid produtoId);
-
+    Task<IEnumerable<MovimentacaoEstoque>> ObterMovimentacaoDoProdutoIdAsync(Guid produtoId);
 
 }

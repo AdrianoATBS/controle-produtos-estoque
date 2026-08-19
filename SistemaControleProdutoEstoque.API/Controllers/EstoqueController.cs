@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SistemaControleProdutosEstoque.Application.Requests.Estoque;
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.AdicionarEstoqueUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarMovimentacaoPorProdutoUseCase;
 
 namespace SistemaControleProdutoEstoque.API.Controllers
 {
@@ -10,9 +11,12 @@ namespace SistemaControleProdutoEstoque.API.Controllers
     public class EstoqueController : ControllerBase
     {
         private readonly IAdicionarEstoqueUseCase _adicionarEstoqueUseCase;
-        public EstoqueController(IAdicionarEstoqueUseCase adicionarEstoqueUseCase)
+        private readonly IBuscarMovimentacaoPorProdutoUseCase _buscarMovimentacaoPorProdutoUseCase;
+        public EstoqueController(IAdicionarEstoqueUseCase adicionarEstoqueUseCase,
+            IBuscarMovimentacaoPorProdutoUseCase buscarMovimentacaoPorProdutoUseCase)
         {
             _adicionarEstoqueUseCase = adicionarEstoqueUseCase;
+            _buscarMovimentacaoPorProdutoUseCase = buscarMovimentacaoPorProdutoUseCase;
         }
 
         [HttpPost]
@@ -27,7 +31,20 @@ namespace SistemaControleProdutoEstoque.API.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
-
         }
+        [HttpGet("{produtoId}")]
+        public async Task<IActionResult> BuscarMovimentacaoPorProduto(Guid produtoId)
+        {
+            try
+            {
+                var resultado = await _buscarMovimentacaoPorProdutoUseCase.Executar(produtoId);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
     }
 }

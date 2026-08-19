@@ -37,4 +37,11 @@ public class MovimentacaoEstoqueRepository : IMovimentacaoEstoqueRepository
         _context.MovimentacoesEstoque.Add(movimentacaoEstoque);
         await _context.SaveChangesAsync();
     }
+    public async Task<IEnumerable<MovimentacaoEstoque>> ObterMovimentacaoDoProdutoIdAsync(Guid produtoId)
+    {
+        return await _context.MovimentacoesEstoque.Include(p => p.Produto)
+            .Where(mov => mov.ProdutoId == produtoId)
+            .ToListAsync();
+    }
+    
 }
