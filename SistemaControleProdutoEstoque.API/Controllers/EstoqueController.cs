@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SistemaControleProdutosEstoque.Application.Requests.Estoque;
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.AdicionarEstoqueUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarMovimentacaoPorProdutoUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarUltimaMovimentacaoDoProdutoUseCase;
 
 namespace SistemaControleProdutoEstoque.API.Controllers
 {
@@ -12,11 +13,14 @@ namespace SistemaControleProdutoEstoque.API.Controllers
     {
         private readonly IAdicionarEstoqueUseCase _adicionarEstoqueUseCase;
         private readonly IBuscarMovimentacaoPorProdutoUseCase _buscarMovimentacaoPorProdutoUseCase;
+        private readonly IBuscarUltimaMovimentacaoDoProdutoUseCase _buscarUltimaMovimentacaoDoProdutoUseCase;
         public EstoqueController(IAdicionarEstoqueUseCase adicionarEstoqueUseCase,
-            IBuscarMovimentacaoPorProdutoUseCase buscarMovimentacaoPorProdutoUseCase)
+            IBuscarMovimentacaoPorProdutoUseCase buscarMovimentacaoPorProdutoUseCase,
+            IBuscarUltimaMovimentacaoDoProdutoUseCase buscarUltimaMovimentacaoDoProdutoUseCase)
         {
             _adicionarEstoqueUseCase = adicionarEstoqueUseCase;
             _buscarMovimentacaoPorProdutoUseCase = buscarMovimentacaoPorProdutoUseCase;
+            _buscarUltimaMovimentacaoDoProdutoUseCase = buscarUltimaMovimentacaoDoProdutoUseCase;
         }
 
         [HttpPost]
@@ -44,6 +48,12 @@ namespace SistemaControleProdutoEstoque.API.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
+        [HttpGet("/ultima-movimentacao/{produtoId}")]
+        public async Task<IActionResult> BuscarUltimaMovimentacaoDoProduto(Guid produtoId)
+        {
+            var resultado = await _buscarUltimaMovimentacaoDoProdutoUseCase.Executar(produtoId);
+            return Ok(resultado);
         }
 
     }
