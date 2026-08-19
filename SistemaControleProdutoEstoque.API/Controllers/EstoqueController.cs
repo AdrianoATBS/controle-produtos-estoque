@@ -49,7 +49,7 @@ namespace SistemaControleProdutoEstoque.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-        [HttpGet("/ultima-movimentacao/{produtoId}")]
+        [HttpGet("ultima-movimentacao/{produtoId}")]
         public async Task<IActionResult> BuscarUltimaMovimentacaoDoProduto(Guid produtoId)
         {
             var resultado = await _buscarUltimaMovimentacaoDoProdutoUseCase.Executar(produtoId);
