@@ -41,7 +41,7 @@ namespace SistemaControleProdutoEstoque.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-        [HttpGet("{produtoId}")]
+        [HttpGet("buscar-movimentacoes/{produtoId}")]
         public async Task<IActionResult> BuscarMovimentacaoPorProduto(Guid produtoId)
         {
             try
