@@ -9,5 +9,5 @@ public class BuscarMovimentacaoPorProdutoResponse
     public string NomeProduto { get; set; } = string.Empty;
     public int Quantidade { get; set; }
     public TipoMovimentacao TipoEstoque { get; set; }
-    public string DataCriacao { get; set; } = string.Empty;
+    public string DataMovimentacao { get; set; } = string.Empty;
 }
