@@ -43,7 +43,7 @@ public class MovimentacaoEstoqueRepository : IMovimentacaoEstoqueRepository
             .Where(mov => mov.ProdutoId == produtoId)
             .ToListAsync();
     }
-    public async Task<IEnumerable<MovimentacaoEstoque>> ObterMovimentacoesPorPeridoAsync(DateOnly dataInicio,
+    public async Task<IEnumerable<MovimentacaoEstoque>> ObterMovimentacoesPorPeriodoAsync(DateOnly dataInicio,
         DateOnly dataFim)
     {
         DateTime InicioConvertido = dataInicio.ToDateTime(TimeOnly.MinValue);
