@@ -6,6 +6,7 @@ using SistemaControleProdutosEstoque.Application.UseCases.Estoque.AdicionarEstoq
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarMovimentacaoPorProdutoUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarTodasMovimentacoesUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarUltimaMovimentacaoDoProdutoUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Estoque.FiltrarPorPeriodoUseCase;
 
 namespace SistemaControleProdutoEstoque.API.Controllers
 {
@@ -17,15 +18,18 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         private readonly IBuscarMovimentacaoPorProdutoUseCase _buscarMovimentacaoPorProdutoUseCase;
         private readonly IBuscarUltimaMovimentacaoDoProdutoUseCase _buscarUltimaMovimentacaoDoProdutoUseCase;
         private readonly IBuscarTodasMovimentacoesUseCase _buscarTodasMovimentacoesUseCase;
+        private readonly IFiltrarPorPeriodoUseCase _filtrarPorPeriodoUseCase;
         public EstoqueController(IAdicionarEstoqueUseCase adicionarEstoqueUseCase,
             IBuscarMovimentacaoPorProdutoUseCase buscarMovimentacaoPorProdutoUseCase,
             IBuscarUltimaMovimentacaoDoProdutoUseCase buscarUltimaMovimentacaoDoProdutoUseCase,
-            IBuscarTodasMovimentacoesUseCase buscarTodasMovimentacoesUseCase)
+            IBuscarTodasMovimentacoesUseCase buscarTodasMovimentacoesUseCase,
+            IFiltrarPorPeriodoUseCase filtrarPorPeriodoUseCase)
         {
             _adicionarEstoqueUseCase = adicionarEstoqueUseCase;
             _buscarMovimentacaoPorProdutoUseCase = buscarMovimentacaoPorProdutoUseCase;
             _buscarUltimaMovimentacaoDoProdutoUseCase = buscarUltimaMovimentacaoDoProdutoUseCase;
             _buscarTodasMovimentacoesUseCase = buscarTodasMovimentacoesUseCase;
+            _filtrarPorPeriodoUseCase = filtrarPorPeriodoUseCase;
         }
 
         [HttpPost]
@@ -68,6 +72,19 @@ namespace SistemaControleProdutoEstoque.API.Controllers
                 var resultado = await _buscarTodasMovimentacoesUseCase.Executar();
                 return Ok(resultado);
 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+        [HttpGet("filtrar-por-periodo")]
+        public async Task<IActionResult> FiltrarPorPerido([FromQuery]FiltrarPorPeriodoRequest request)
+        {
+            try
+            {
+                var resultado = await _filtrarPorPeriodoUseCase.Executar(request);
+                return Ok(resultado);
             }
             catch (Exception ex)
             {
