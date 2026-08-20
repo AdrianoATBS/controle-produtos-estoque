@@ -14,9 +14,6 @@ public class BuscarMovimentacaoPorProdutoUseCase : IBuscarMovimentacaoPorProduto
     }
     public async Task<List<BuscarMovimentacaoPorProdutoResponse>> Executar(Guid produtoId)
     {
-        var produto = await _produtoRepository.ObterProdutoIdAsync (produtoId);
-        if (produto == null)
-            throw new ArgumentException("Produto não encontrado");
 
         var movimentacoes = await _movimentacaoEstoqueRepository.ObterMovimentacaoDoProdutoIdAsync(produtoId);
         if(movimentacoes == null)
@@ -27,7 +24,7 @@ public class BuscarMovimentacaoPorProdutoUseCase : IBuscarMovimentacaoPorProduto
         {
             Id = m.Id,
             ProdutoId = m.ProdutoId,
-            Nome = m.Produto.Nome,
+            NomeProduto = m.Produto.Nome,
             Quantidade = m.Quantidade,
             TipoEstoque = m.Tipo,
             DataCriacao = m.DataMovimentacao.ToString("dd/MM/yyyy HH:mm:ss")

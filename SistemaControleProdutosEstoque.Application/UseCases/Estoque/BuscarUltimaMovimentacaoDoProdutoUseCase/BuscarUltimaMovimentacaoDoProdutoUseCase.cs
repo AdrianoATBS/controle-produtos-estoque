@@ -14,8 +14,6 @@ public class BuscarUltimaMovimentacaoDoProdutoUseCase : IBuscarUltimaMovimentaca
     }
     public async Task<BuscarUltimaMovimentacaoDoProdutoResponse> Executar(Guid produtoId)
     {
-        var produto = await _produtoRepository.ObterProdutoIdAsync(produtoId);
-        if(produto == null) throw new ArgumentException("Produto não encontrado");
 
         var ultimaMovimentacao = await _movimentacaoEstoqueRepository.ObterUltimaMovimentacaoPorProdutoAsync(produtoId);
         if (ultimaMovimentacao == null) throw new ArgumentException("Nenhuma movimentação encontrada");
@@ -24,7 +22,7 @@ public class BuscarUltimaMovimentacaoDoProdutoUseCase : IBuscarUltimaMovimentaca
         {
             Id = ultimaMovimentacao.Id,
             ProdutoId = ultimaMovimentacao.ProdutoId,
-            Nome = produto.Nome,
+            NomeProduto = ultimaMovimentacao.Produto.Nome,
             Quantidade = ultimaMovimentacao.Quantidade,
             TipoEstoque = ultimaMovimentacao.Tipo,
             DataCriacao = ultimaMovimentacao.DataMovimentacao.ToString("dd/MM/yyyy HH:mm:ss")
