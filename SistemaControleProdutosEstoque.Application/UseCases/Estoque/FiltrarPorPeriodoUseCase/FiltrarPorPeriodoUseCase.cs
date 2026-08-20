@@ -13,16 +13,22 @@ public class FiltrarPorPeriodoUseCase : IFiltrarPorPeriodoUseCase
     }
     public async Task<List<FiltrarPorPeriodoResponse>> Executar(FiltrarPorPeriodoRequest request)
     {
-        var movimentacoes = await _movimentacaoEstoqueRepository.ObterMovimentacoesPorPeridoAsync
+        var movimentacoes = await _movimentacaoEstoqueRepository.ObterMovimentacoesPorPeriodoAsync
             (request.DataInicio, request.DataFim);
 
-       return movimentacoes.Select(m => new FiltrarPorPeriodoResponse { 
+        if(request.DataInicio > request.DataFim)
+            throw new ArgumentException("A data de início não pode ser maior que a data de fim.");
+        if(request.DataFim > request.DataInicio)
+            throw new ArgumentException("A data de fim não pode ser menor que a data de início.");
+
+
+        return movimentacoes.Select(m => new FiltrarPorPeriodoResponse { 
            Id = m.Id,
            ProdutoId = m.ProdutoId,
            NomeProduto = m.Produto.Nome,
            Quantidade = m.Quantidade,
            TipoEstoque = m.Tipo,
-           DataCriacao = m.DataMovimentacao.ToString("dd/MM/yyyy")
+           DataMovimentacao = m.DataMovimentacao.ToString("dd/MM/yyyy")
 
        }).ToList();
        

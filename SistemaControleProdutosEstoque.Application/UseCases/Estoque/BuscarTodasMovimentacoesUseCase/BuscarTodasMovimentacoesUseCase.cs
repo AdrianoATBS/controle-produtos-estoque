@@ -23,7 +23,7 @@ public class BuscarTodasMovimentacoesUseCase : IBuscarTodasMovimentacoesUseCase
             NomeProduto = m.Produto.Nome,
             Quantidade = m.Quantidade,
             TipoEstoque = m.Tipo,
-            DataCriacao = m.DataMovimentacao.ToString("dd/MM/yyyy HH:mm:ss")
+            DataMovimentacao = m.DataMovimentacao.ToString("dd/MM/yyyy HH:mm:ss")
 
         }).ToList();
 

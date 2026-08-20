@@ -25,7 +25,7 @@ public class BuscarUltimaMovimentacaoDoProdutoUseCase : IBuscarUltimaMovimentaca
             NomeProduto = ultimaMovimentacao.Produto.Nome,
             Quantidade = ultimaMovimentacao.Quantidade,
             TipoEstoque = ultimaMovimentacao.Tipo,
-            DataCriacao = ultimaMovimentacao.DataMovimentacao.ToString("dd/MM/yyyy HH:mm:ss")
+            DataMovimentacao = ultimaMovimentacao.DataMovimentacao.ToString("dd/MM/yyyy HH:mm:ss")
         };
 
     }
