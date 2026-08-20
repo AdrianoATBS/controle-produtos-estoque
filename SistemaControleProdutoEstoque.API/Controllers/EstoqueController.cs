@@ -79,12 +79,15 @@ namespace SistemaControleProdutoEstoque.API.Controllers
             }
         }
         [HttpGet("filtrar-por-periodo")]
-        public async Task<IActionResult> FiltrarPorPerido([FromQuery]FiltrarPorPeriodoRequest request)
+        public async Task<IActionResult> FiltrarPorPeriodo([FromQuery]FiltrarPorPeriodoRequest request)
         {
             try
             {
                 var resultado = await _filtrarPorPeriodoUseCase.Executar(request);
-                return Ok(resultado);
+                return Ok(new {
+                    message="Movimentações filtradas com sucesso.", 
+                    dados=resultado
+                });
             }
             catch (Exception ex)
             {
