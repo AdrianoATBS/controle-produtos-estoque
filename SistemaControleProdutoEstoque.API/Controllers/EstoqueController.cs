@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata;
 using SistemaControleProdutosEstoque.Application.Requests.Estoque;
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.AdicionarEstoqueUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarMovimentacaoPorProdutoUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarTodasMovimentacoesUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarUltimaMovimentacaoDoProdutoUseCase;
 
 namespace SistemaControleProdutoEstoque.API.Controllers
@@ -14,13 +16,16 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         private readonly IAdicionarEstoqueUseCase _adicionarEstoqueUseCase;
         private readonly IBuscarMovimentacaoPorProdutoUseCase _buscarMovimentacaoPorProdutoUseCase;
         private readonly IBuscarUltimaMovimentacaoDoProdutoUseCase _buscarUltimaMovimentacaoDoProdutoUseCase;
+        private readonly IBuscarTodasMovimentacoesUseCase _buscarTodasMovimentacoesUseCase;
         public EstoqueController(IAdicionarEstoqueUseCase adicionarEstoqueUseCase,
             IBuscarMovimentacaoPorProdutoUseCase buscarMovimentacaoPorProdutoUseCase,
-            IBuscarUltimaMovimentacaoDoProdutoUseCase buscarUltimaMovimentacaoDoProdutoUseCase)
+            IBuscarUltimaMovimentacaoDoProdutoUseCase buscarUltimaMovimentacaoDoProdutoUseCase,
+            IBuscarTodasMovimentacoesUseCase buscarTodasMovimentacoesUseCase)
         {
             _adicionarEstoqueUseCase = adicionarEstoqueUseCase;
             _buscarMovimentacaoPorProdutoUseCase = buscarMovimentacaoPorProdutoUseCase;
             _buscarUltimaMovimentacaoDoProdutoUseCase = buscarUltimaMovimentacaoDoProdutoUseCase;
+            _buscarTodasMovimentacoesUseCase = buscarTodasMovimentacoesUseCase;
         }
 
         [HttpPost]
@@ -54,6 +59,20 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         {
             var resultado = await _buscarUltimaMovimentacaoDoProdutoUseCase.Executar(produtoId);
             return Ok(resultado);
+        }
+        [HttpGet("todas-movimentacoes")]
+        public async Task<IActionResult> BuscarTodasMovimentacoes()
+        {
+            try
+            {
+                var resultado = await _buscarTodasMovimentacoesUseCase.Executar();
+                return Ok(resultado);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
     }

@@ -9,6 +9,7 @@ using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ListarTodasC
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ReativarCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.AdicionarEstoqueUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarMovimentacaoPorProdutoUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarTodasMovimentacoesUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarUltimaMovimentacaoDoProdutoUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.AlterarNomeDoProduto;
 using SistemaControleProdutosEstoque.Application.UseCases.Produtos.BuscarProdutoPorIdUseCase;
@@ -51,6 +52,7 @@ public static class ConfigureApplication
         services.AddScoped<IAdicionarEstoqueUseCase, AdicionarEstoqueUseCase>();
         services.AddScoped<IBuscarMovimentacaoPorProdutoUseCase, BuscarMovimentacaoPorProdutoUseCase>();
         services.AddScoped<IBuscarUltimaMovimentacaoDoProdutoUseCase, BuscarUltimaMovimentacaoDoProdutoUseCase>();
+        services.AddScoped<IBuscarTodasMovimentacoesUseCase, BuscarTodasMovimentacoesUseCase>();
         return services;
     }
 }
