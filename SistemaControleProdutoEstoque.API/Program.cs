@@ -1,3 +1,4 @@
+using SistemaControleProdutoEstoque.API.Middlewares;
 using SistemaControleProdutosEstoque.Application.DependecyInjection;
 using SistemaControleProdutosEstoque.Infrastructure.DependencyInjection;
 using System.Text.Json;
@@ -26,6 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

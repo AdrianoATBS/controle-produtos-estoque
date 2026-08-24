@@ -44,101 +44,65 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CriarCategoria([FromBody] CriarCategoriaRequest request)
         {
-            try
-            {
-                var resultado = await _criarCategoriaUseCase.Executar(request);
+          
+            var resultado = await _criarCategoriaUseCase.Executar(request);
 
-                return Created(string.Empty, resultado);
+            return Created(string.Empty, resultado);
 
-            }
-            catch (Exception ex) 
-            {
-                return BadRequest(ex.Message);
-            }
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> AlterarNomeCategoria(Guid id, AlterarNomeCategoriaRequest request)
         {
-            try
-            {
-                var resultado = await _alterarNomeCategoriaUseCase.Executar(id, request);
-                return Ok(resultado);
+           
+            var resultado = await _alterarNomeCategoriaUseCase.Executar(id, request);
+            return Ok(new{message="Nome da categoria alterado com sucesso.", data=resultado});
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+          
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> BuscarCategoriaPorId(Guid id)
         {
-            try
-            {
-                var resultado = await _buscarCategoriaPorIdUseCase.Executar(id);
-                return Ok(resultado);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+       
+            var resultado = await _buscarCategoriaPorIdUseCase.Executar(id);
+            return Ok(new{message="Categoria encontrada com sucesso.", data=resultado});
+
         }
 
         [HttpGet]
         public async Task<IActionResult> ListaTodasCategorias()
         {
-            try
-            {
-                var resultado = await _listaTodasCategoriaUseCase.Executar();
-                return Ok(resultado);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+            var resultado = await _listaTodasCategoriaUseCase.Executar();
+            return Ok(new{message="Todas as categorias encontradas com sucesso.", data=resultado});
+          
         }
         [HttpPut]
         [Route("{id}/desativar")]
         public async Task<IActionResult> DesativarCategoria(Guid id)
         {
-            try
-            {
-                await _desativarCategoriaUseCase.Executar(id);
-                return Ok(new { mensagem = "Categoria desativada com sucesso"});
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await _desativarCategoriaUseCase.Executar(id);
+            return Ok(new { mensagem = "Categoria desativada com sucesso"});
+
+
         }
         [HttpPut]
         [Route("{id}/reativar")]
         public async Task<IActionResult> ReativarCategoria(Guid id)
         {
-            try
-            {
-                await _reativarCategoriaUseCase.Executar(id);
-                return Ok(new { message = "Categoria reativada com sucesso" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+            await _reativarCategoriaUseCase.Executar(id);
+            return Ok(new { message = "Categoria reativada com sucesso" });
+
         }
         [HttpDelete]
         [Route("{id}/deletar")]
         public async Task<IActionResult> DeletarCategoria(Guid id)
         {
-            try
-            {
-                await _deletarCategoriaUseCase.Executar(id);
-                return Ok(new { message = "Categoria deletada com sucesso" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+         
+            await _deletarCategoriaUseCase.Executar(id);
+            return Ok(new { message = "Categoria deletada com sucesso" });
+
         }
 
     }

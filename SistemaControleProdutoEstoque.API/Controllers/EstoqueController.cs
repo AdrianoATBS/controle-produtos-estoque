@@ -35,64 +35,43 @@ namespace SistemaControleProdutoEstoque.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AdicionarEstoque(AdicionarEstoqueRequest request)
         {
-            try
-            {
-               var resultado = await _adicionarEstoqueUseCase.Executar(request);
-                return Ok(resultado);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+           
+            var resultado = await _adicionarEstoqueUseCase.Executar(request);
+            return Ok(resultado);
+            
         }
         [HttpGet("buscar-movimentacoes/{produtoId}")]
         public async Task<IActionResult> BuscarMovimentacaoPorProduto(Guid produtoId)
         {
-            try
-            {
-                var resultado = await _buscarMovimentacaoPorProdutoUseCase.Executar(produtoId);
-                return Ok(resultado);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+           
+            var resultado = await _buscarMovimentacaoPorProdutoUseCase.Executar(produtoId);
+            return Ok(new { message = "Movimentação encontrada", data = resultado });
+          
+            
         }
         [HttpGet("ultima-movimentacao/{produtoId}")]
         public async Task<IActionResult> BuscarUltimaMovimentacaoDoProduto(Guid produtoId)
         {
             var resultado = await _buscarUltimaMovimentacaoDoProdutoUseCase.Executar(produtoId);
-            return Ok(resultado);
+            return Ok(new { message = "Última movimentação encontrada", data = resultado });
         }
+
         [HttpGet("todas-movimentacoes")]
         public async Task<IActionResult> BuscarTodasMovimentacoes()
         {
-            try
-            {
-                var resultado = await _buscarTodasMovimentacoesUseCase.Executar();
-                return Ok(resultado);
+         
+            var resultado = await _buscarTodasMovimentacoesUseCase.Executar();
+            return Ok(new { message = "Todas as movimentações encontradas", data = resultado });
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+
         }
         [HttpGet("filtrar-por-periodo")]
         public async Task<IActionResult> FiltrarPorPeriodo([FromQuery]FiltrarPorPeriodoRequest request)
         {
-            try
-            {
-                var resultado = await _filtrarPorPeriodoUseCase.Executar(request);
-                return Ok(new {
-                    message="Movimentações filtradas com sucesso.", 
-                    dados=resultado
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+           
+            var resultado = await _filtrarPorPeriodoUseCase.Executar(request);
+            return Ok(new {message="Movimentações filtradas com sucesso.", dados=resultado});
+           
         }
 
     }
