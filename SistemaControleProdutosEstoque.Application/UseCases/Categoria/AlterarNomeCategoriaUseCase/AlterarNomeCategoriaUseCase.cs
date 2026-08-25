@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using SistemaControleProdutosEstoque.Application.Exceptions;
 using SistemaControleProdutosEstoque.Application.Requests.Categorias;
 using SistemaControleProdutosEstoque.Application.Responses.Categorias;
 using SistemaControleProdutosEstoque.Application.Validators.Categorias;
@@ -25,11 +26,11 @@ public class AlterarNomeCategoriaUseCase : IAlterarNomeCategoriaUseCase
         
         var categoria = await _categoriaRepository.ObterCategoriaIdAsync(id);
         if(categoria == null)
-               throw new KeyNotFoundException("Categoria não encontrada.");
+               throw new NotFoundException("Categoria não encontrada.");
         
         var jaExiste = await _categoriaRepository.ExisteCategoriaComNomeAsync(request.NovoNome);
         if(jaExiste)
-            throw new InvalidOperationException("Já existe uma categoria com esse nome.");
+            throw new BusinessException("Já existe uma categoria com esse nome.");
 
         categoria.AlterarNome(request.NovoNome);
 
