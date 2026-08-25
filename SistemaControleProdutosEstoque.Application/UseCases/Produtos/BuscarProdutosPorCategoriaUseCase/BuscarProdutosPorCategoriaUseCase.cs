@@ -14,7 +14,7 @@ public class BuscarProdutosPorCategoriaUseCase : IBuscarProdutosPorCategoriaUseC
     public async Task<IEnumerable<BuscarProdutosPorCategoriaResponse>> Executar(
         Guid id)
     {
-        var produto = await _produtoRepository.ObterProdutosPorCategoriaAsync(id);
+        var produtos = await _produtoRepository.ObterProdutosPorCategoriaAsync(id);
         
 
         return produto.Select(p => new BuscarProdutosPorCategoriaResponse { 
