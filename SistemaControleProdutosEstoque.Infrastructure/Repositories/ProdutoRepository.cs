@@ -40,6 +40,12 @@ public class ProdutoRepository : IProdutoRepository
         if(string.IsNullOrWhiteSpace(nome)) return false;
         return await _context.Produtos.AnyAsync(p => p.Nome.ToLower() == nome.ToLower());
     }
+    public async Task<bool>ExisteProdutoComNomeParaAlteracaoAsync(string nome, Guid idAtual)
+    {
+        if (string.IsNullOrWhiteSpace(nome)) return false;
+        return await _context.Produtos.AnyAsync(p => p.Nome.ToLower() == nome.ToLower()
+        && p.Id != idAtual);
+    }
 
     public async Task<bool> ExisteProdutoNaCategoriaAsync(Guid categoriaId)
     {

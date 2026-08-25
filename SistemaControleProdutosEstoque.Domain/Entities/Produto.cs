@@ -71,6 +71,15 @@ public class Produto
             throw new InvalidOperationException("O produto já está ativado.");
         Ativo = true;
     }
+    public void AlterarDados(string novoNome, string novaDescricao, decimal novoPreco)
+    {
+        ValidarNome(novoNome);
+        ValidarPreco(novoPreco);
+
+        Nome = novoNome;
+        Descricao = novaDescricao;
+        Preco = novoPreco;
+    }
     public void AdicionarEstoque(int quantidade)
     {
         if (quantidade <= 0)
@@ -80,7 +89,7 @@ public class Produto
     }
     public void RemoverEstoque(int quantidade)
     {
-        if (quantidade < 0)
+        if (quantidade > 0)
             throw new ArgumentException("Quantidade inválida");
         if (QuantidadeEstoque < quantidade)
             throw new InvalidOperationException("Estoque insuficiente");
