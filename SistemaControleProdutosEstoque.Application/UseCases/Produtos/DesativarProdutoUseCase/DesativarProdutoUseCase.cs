@@ -1,4 +1,5 @@
-﻿using SistemaControleProdutosEstoque.Domain.Interfaces;
+﻿using SistemaControleProdutosEstoque.Application.Exceptions;
+using SistemaControleProdutosEstoque.Domain.Interfaces;
 
 namespace SistemaControleProdutosEstoque.Application.UseCases.Produtos.DesativarProdutoUseCase;
 
@@ -13,7 +14,7 @@ public class DesativarProdutoUseCase : IDesativarProdutoUseCase
     {
         var produto = await _produtoRepository.ObterProdutoIdAsync(id);
         if(produto == null)  
-            throw new ArgumentException("Produto não encontrado");
+            throw new NotFoundException("Produto não encontrado");
 
         produto.Desativar();
         await _produtoRepository.AtualizarProdutoAsync(produto);

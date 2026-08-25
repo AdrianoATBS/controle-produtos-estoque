@@ -1,4 +1,5 @@
-﻿using SistemaControleProdutosEstoque.Domain.Interfaces;
+﻿using SistemaControleProdutosEstoque.Application.Exceptions;
+using SistemaControleProdutosEstoque.Domain.Interfaces;
 
 namespace SistemaControleProdutosEstoque.Application.UseCases.Produtos.ReativarProdutoUseCase;
 
@@ -13,7 +14,7 @@ public class ReativarProdutoUseCase : IReativarProdutoUseCase
     {
         var produto = await _produtoRepository.ObterProdutoIdAsync(id);
         if (produto == null)
-            throw new ArgumentException("O produto não foi encontrado.");
+            throw new NotFoundException("O produto não foi encontrado.");
 
         produto.Ativar();
         await _produtoRepository.AtualizarProdutoAsync(produto);

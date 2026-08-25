@@ -1,4 +1,5 @@
-﻿using SistemaControleProdutosEstoque.Application.Responses.Produtos;
+﻿using SistemaControleProdutosEstoque.Application.Exceptions;
+using SistemaControleProdutosEstoque.Application.Responses.Produtos;
 using SistemaControleProdutosEstoque.Domain.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,7 +18,7 @@ public class BuscarProdutoPorIdUseCase : IBuscarProdutoPorIdUseCase
     {
         var produto = await _produtoRepository.ObterProdutoIdAsync(id);
         if (produto == null)
-            throw new ValidationException("Produto não encontrado");
+            throw new NotFoundException("Produto não encontrado");
 
   
 

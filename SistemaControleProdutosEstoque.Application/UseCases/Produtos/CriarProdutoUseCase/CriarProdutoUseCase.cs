@@ -1,4 +1,6 @@
-﻿using SistemaControleProdutosEstoque.Application.Requests.Produto;
+﻿using FluentValidation;
+using SistemaControleProdutosEstoque.Application.Exceptions;
+using SistemaControleProdutosEstoque.Application.Requests.Produto;
 using SistemaControleProdutosEstoque.Application.Responses.Produtos;
 using SistemaControleProdutosEstoque.Application.Validators.Produtos;
 using SistemaControleProdutosEstoque.Domain.Interfaces;
@@ -20,20 +22,20 @@ public class CriarProdutoUseCase : ICriarProdutoUseCase
     }
     public async Task<CriarProdutoResponse> Executar(CriarProdutoRequest request)
     {
-        var validator = await _validator.ValidateAsync(request);
-        if (!validator.IsValid)
-            throw new Exception($"Dados inválidos ${string.Join(", ", validator.Errors.Select(e => e.ErrorMessage))} ");
+        var resultadoValidacao = await _validator.ValidateAsync(request);
+        if (!resultadoValidacao.IsValid)
+            throw new ValidationException(resultadoValidacao.Errors);
         
         var jaExiste = await _produtoRepository.ExisteProdutoComNomeAsync(request.Nome);
         if(jaExiste)
-            throw new Exception($"Já existe um produto com o nome {request.Nome} cadastrado.");
+            throw new BusinessException($"Já existe um produto com o nome {request.Nome} cadastrado.");
 
         var categoriaEntidade = await _categoriaRepository.ObterCategoriaIdAsync(request.CategoriaId);
         
         if(categoriaEntidade == null)
-            throw new KeyNotFoundException($"A categoria informada não existe.");
+            throw new NotFoundException($"A categoria informada não existe.");
         if(!categoriaEntidade.Ativo)
-                throw new InvalidOperationException("Não é possivel associar um produto a uma categoria inativa.");
+                throw new BusinessException("Não é possivel associar um produto a uma categoria inativa.");
 
         var novoProduto = Domain.Entities.Produto.Criar(
             request.Nome,

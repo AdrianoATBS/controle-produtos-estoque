@@ -1,4 +1,5 @@
-﻿using SistemaControleProdutosEstoque.Domain.Interfaces;
+﻿using SistemaControleProdutosEstoque.Application.Exceptions;
+using SistemaControleProdutosEstoque.Domain.Interfaces;
 
 namespace SistemaControleProdutosEstoque.Application.UseCases.Produtos.DeletarProdutoUseCase;
 
@@ -13,10 +14,10 @@ public class DeletarProdutoUseCase : IDeletarProdutoUseCase
     {
         var produto = await _produtoRepository.ObterProdutoIdAsync(id);
         if(produto == null)
-                throw new ArgumentException("O produto não foi encontrado.");
+                throw new NotFoundException("O produto não foi encontrado.");
         
         if(produto.Ativo)
-            throw new ArgumentException("Não é possível excluir um produto ativo.");
+            throw new BusinessException("Não é possível excluir um produto ativo.");
 
         await _produtoRepository.DeletarProdutoAsync(produto.Id);
     }

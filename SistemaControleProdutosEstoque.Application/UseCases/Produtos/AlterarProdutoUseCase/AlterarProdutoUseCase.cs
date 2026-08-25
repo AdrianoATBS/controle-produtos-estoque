@@ -1,4 +1,6 @@
-﻿using SistemaControleProdutosEstoque.Application.Requests.Produto;
+﻿using FluentValidation;
+using SistemaControleProdutosEstoque.Application.Exceptions;
+using SistemaControleProdutosEstoque.Application.Requests.Produto;
 using SistemaControleProdutosEstoque.Application.Responses.Produtos;
 using SistemaControleProdutosEstoque.Application.Validators.Produtos;
 using SistemaControleProdutosEstoque.Domain.Interfaces;
@@ -18,24 +20,32 @@ public class AlterarProdutoUseCase : IAlterarProdutoUseCase
     }
     public async Task<AlterarProdutoResponse> Executar(Guid id,AlterarProdutoRequest request)
     {
-        var validator = await _validator.ValidateAsync(request);
-        if(!validator.IsValid)
-                throw new Exception("Request inválido");
+        var resultadoValidacao = await _validator.ValidateAsync(request);
+        if(!resultadoValidacao.IsValid)
+                throw new ValidationException(resultadoValidacao.Errors);
 
         var produto = await _produtoRepository.ObterProdutoIdAsync(id);
         if(produto == null)
-                throw new KeyNotFoundException("Produto não encontrado");
+                throw new NotFoundException("Produto não encontrado");
 
-        var jaExisteProdutoComMesmoNome = await _produtoRepository.ExisteProdutoComNomeAsync(request.NovoNome);
+        var jaExisteProdutoComMesmoNome = await _produtoRepository.
+            ExisteProdutoComNomeParaAlteracaoAsync(request.NovoNome, id);
         if(jaExisteProdutoComMesmoNome)
-            throw new Exception("Já existe um produto com o mesmo nome");
+            throw new BusinessException("Já existe um produto com o mesmo nome");
+
+        produto.AlterarDados(
+            request.NovoNome,
+            request.NovaDescricao,
+            request.NovoPreco
+         );
+        await _produtoRepository.AtualizarProdutoAsync(produto);
 
         return new AlterarProdutoResponse
         {
-            Id = id,
-            Nome = request.NovoNome,
-            Descricao = request.NovaDescricao,
-            Preco = request.NovoPreco
+            Id = produto.Id,
+            Nome = produto.Nome,
+            Descricao = produto.Descricao,
+            Preco = produto.Preco
         };
     }
 }
