@@ -1,4 +1,5 @@
-﻿using SistemaControleProdutosEstoque.Application.Responses.Estoque;
+﻿using SistemaControleProdutosEstoque.Application.Exceptions;
+using SistemaControleProdutosEstoque.Application.Responses.Estoque;
 using SistemaControleProdutosEstoque.Domain.Interfaces;
 
 namespace SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarUltimaMovimentacaoDoProdutoUseCase;
@@ -6,17 +7,16 @@ namespace SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarUlti
 public class BuscarUltimaMovimentacaoDoProdutoUseCase : IBuscarUltimaMovimentacaoDoProdutoUseCase
 {
     private readonly IMovimentacaoEstoqueRepository _movimentacaoEstoqueRepository;
-    private readonly IProdutoRepository _produtoRepository;
-    public BuscarUltimaMovimentacaoDoProdutoUseCase(IMovimentacaoEstoqueRepository movimentacaoEstoqueRepository, IProdutoRepository produtoRepository)
+    public BuscarUltimaMovimentacaoDoProdutoUseCase(IMovimentacaoEstoqueRepository
+        movimentacaoEstoqueRepository)
     {
         _movimentacaoEstoqueRepository = movimentacaoEstoqueRepository;
-        _produtoRepository = produtoRepository;
     }
     public async Task<BuscarUltimaMovimentacaoDoProdutoResponse> Executar(Guid produtoId)
     {
 
         var ultimaMovimentacao = await _movimentacaoEstoqueRepository.ObterUltimaMovimentacaoPorProdutoAsync(produtoId);
-        if (ultimaMovimentacao == null) throw new ArgumentException("Nenhuma movimentação encontrada");
+        if (ultimaMovimentacao == null) throw new NotFoundException("Nenhuma movimentação encontrada");
         
         return new BuscarUltimaMovimentacaoDoProdutoResponse
         {

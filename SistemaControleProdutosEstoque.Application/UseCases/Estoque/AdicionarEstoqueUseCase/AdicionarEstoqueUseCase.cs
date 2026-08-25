@@ -63,7 +63,7 @@ public class AdicionarEstoqueUseCase : IAdicionarEstoqueUseCase
         }
         else
         {
-            throw new ArgumentException("Tipo de movimentação inválido");
+            throw new NotFoundException("Tipo de movimentação inválido");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using SistemaControleProdutosEstoque.Application.Responses.Estoque;
+﻿using SistemaControleProdutosEstoque.Application.Exceptions;
+using SistemaControleProdutosEstoque.Application.Responses.Estoque;
 using SistemaControleProdutosEstoque.Domain.Interfaces;
 
 namespace SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarMovimentacaoPorProdutoUseCase;
@@ -16,9 +17,6 @@ public class BuscarMovimentacaoPorProdutoUseCase : IBuscarMovimentacaoPorProduto
     {
 
         var movimentacoes = await _movimentacaoEstoqueRepository.ObterMovimentacaoDoProdutoIdAsync(produtoId);
-        if(movimentacoes == null)
-    
-            throw new ArgumentException("Movimentação não encontrada");
 
         return movimentacoes.Select(m => new BuscarMovimentacaoPorProdutoResponse
         {

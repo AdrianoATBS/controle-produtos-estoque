@@ -1,5 +1,7 @@
-﻿using SistemaControleProdutosEstoque.Application.Requests.Estoque;
+﻿using FluentValidation;
+using SistemaControleProdutosEstoque.Application.Requests.Estoque;
 using SistemaControleProdutosEstoque.Application.Responses.Estoque;
+using SistemaControleProdutosEstoque.Application.Validators.Estoque;
 using SistemaControleProdutosEstoque.Domain.Interfaces;
 
 namespace SistemaControleProdutosEstoque.Application.UseCases.Estoque.FiltrarPorPeriodoUseCase;
@@ -7,19 +9,21 @@ namespace SistemaControleProdutosEstoque.Application.UseCases.Estoque.FiltrarPor
 public class FiltrarPorPeriodoUseCase : IFiltrarPorPeriodoUseCase
 {
     private readonly IMovimentacaoEstoqueRepository _movimentacaoEstoqueRepository;
-    public FiltrarPorPeriodoUseCase(IMovimentacaoEstoqueRepository movimentacaoEstoqueRepository)
+    private readonly FiltrarPorPeriodoRequestValidator _validator;
+    public FiltrarPorPeriodoUseCase(IMovimentacaoEstoqueRepository movimentacaoEstoqueRepository,
+        FiltrarPorPeriodoRequestValidator validator)
     {
         _movimentacaoEstoqueRepository = movimentacaoEstoqueRepository;
+        _validator = validator;
     }
     public async Task<List<FiltrarPorPeriodoResponse>> Executar(FiltrarPorPeriodoRequest request)
     {
+        var resultadoValidacao = await _validator.ValidateAsync(request);
+        if (!resultadoValidacao.IsValid)
+            throw new ValidationException(resultadoValidacao.Errors);
+
         var movimentacoes = await _movimentacaoEstoqueRepository.ObterMovimentacoesPorPeriodoAsync
             (request.DataInicio, request.DataFim);
-
-        if(request.DataInicio > request.DataFim)
-            throw new ArgumentException("A data de início não pode ser maior que a data de fim.");
-        if(request.DataFim > request.DataInicio)
-            throw new ArgumentException("A data de fim não pode ser menor que a data de início.");
 
 
         return movimentacoes.Select(m => new FiltrarPorPeriodoResponse { 
