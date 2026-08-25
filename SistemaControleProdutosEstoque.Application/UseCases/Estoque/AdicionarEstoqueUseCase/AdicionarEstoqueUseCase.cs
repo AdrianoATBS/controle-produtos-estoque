@@ -1,5 +1,8 @@
-﻿using SistemaControleProdutosEstoque.Application.Requests.Estoque;
+﻿using FluentValidation;
+using SistemaControleProdutosEstoque.Application.Exceptions;
+using SistemaControleProdutosEstoque.Application.Requests.Estoque;
 using SistemaControleProdutosEstoque.Application.Responses.Estoque;
+using SistemaControleProdutosEstoque.Application.Validators.Estoque;
 using SistemaControleProdutosEstoque.Domain.Entities;
 using SistemaControleProdutosEstoque.Domain.Enums;
 using SistemaControleProdutosEstoque.Domain.Interfaces;
@@ -10,18 +13,25 @@ public class AdicionarEstoqueUseCase : IAdicionarEstoqueUseCase
 {
     private readonly IMovimentacaoEstoqueRepository _movimentacaoEstoqueRepository;
     private readonly IProdutoRepository _produtoRepository;
+    private readonly AdicionarEstoqueRequestValidator _validator;
 
-    public AdicionarEstoqueUseCase(IMovimentacaoEstoqueRepository movimentacaoEstoqueRepository, IProdutoRepository produtoRepository)
+    public AdicionarEstoqueUseCase(IMovimentacaoEstoqueRepository movimentacaoEstoqueRepository,
+        IProdutoRepository produtoRepository, AdicionarEstoqueRequestValidator validator)
     {
         _movimentacaoEstoqueRepository = movimentacaoEstoqueRepository;
         _produtoRepository = produtoRepository;
+        _validator = validator;
     }
 
     public async Task<AdicionarEstoqueResponse> Executar(AdicionarEstoqueRequest request)
     {
+        var resultadoValidacao= await _validator.ValidateAsync(request);
+        if (!resultadoValidacao.IsValid)    
+                throw new ValidationException(resultadoValidacao.Errors);
+
         var produto = await _produtoRepository.ObterProdutoIdAsync(request.ProdutoId);
         if (produto == null)
-            throw new Exception("Produto não encontrado");
+            throw new NotFoundException("Produto não encontrado");
      
         ProcessarMovimentacaoProduto(produto, request.TipoEstoque, request.Quantidade);
 
@@ -33,10 +43,10 @@ public class AdicionarEstoqueUseCase : IAdicionarEstoqueUseCase
 
         return new AdicionarEstoqueResponse
         {
-            Id = produto.Id,
-            Quantidade = request.Quantidade,
-           QuantidadeAtual = produto.QuantidadeEstoque.ToString(),
-           TipoEstoque = movimentacao.Tipo,
+            Id = movimentacao.Id,
+            Quantidade = movimentacao.Quantidade,
+            QuantidadeAtual = produto.QuantidadeEstoque.ToString(),
+            TipoEstoque = movimentacao.Tipo,
             DataCriacao = movimentacao.DataMovimentacao.ToString("dd/MM/yyyy HH:mm:ss")
         };
     }
