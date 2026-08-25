@@ -1,8 +1,6 @@
-﻿using SistemaControleProdutosEstoque.Application.Requests.Categorias;
+﻿using SistemaControleProdutosEstoque.Application.Exceptions;
 using SistemaControleProdutosEstoque.Application.Responses.Categorias;
-using SistemaControleProdutosEstoque.Application.Validators.Categorias;
 using SistemaControleProdutosEstoque.Domain.Interfaces;
-using System.ComponentModel.DataAnnotations;
 
 namespace SistemaControleProdutosEstoque.Application.UseCases.Categoria.BuscarCategoriaPorIdUseCase;
 
@@ -21,7 +19,7 @@ public class BuscarCategoriaPorIdUseCase : IBuscarCategoriaPorIdUseCase
         
         var categoria = await _categoriaRepository.ObterCategoriaIdAsync(id);
         if(categoria == null)
-            throw new ValidationException("Categoria não encontrada.");
+            throw new NotFoundException("Categoria não encontrada.");
 
        
 

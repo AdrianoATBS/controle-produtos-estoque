@@ -1,4 +1,5 @@
-﻿using SistemaControleProdutosEstoque.Application.Responses.Categorias;
+﻿using SistemaControleProdutosEstoque.Application.Exceptions;
+using SistemaControleProdutosEstoque.Application.Responses.Categorias;
 using SistemaControleProdutosEstoque.Domain.Interfaces;
 
 namespace SistemaControleProdutosEstoque.Application.UseCases.Categoria.DesativarCategoriaUseCase;
@@ -15,7 +16,7 @@ public class DesativarCategoriaUseCase : IDesativarCategoriaUseCase
     {
        var categoria =  await _repository.ObterCategoriaIdAsync(id);
         if(categoria == null) 
-            throw new ArgumentException("Categoria não encontrada");
+            throw new NotFoundException("Categoria não encontrada");
 
         categoria.Desativar();
         await _repository.AtualizarCategoriaAsync(categoria);

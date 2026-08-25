@@ -2,8 +2,9 @@
 using SistemaControleProdutosEstoque.Application.Responses.Categorias;
 using SistemaControleProdutosEstoque.Application.Validators.Categorias;
 using SistemaControleProdutosEstoque.Domain.Interfaces;
-using SistemaControleProdutosEstoque.Application.UseCases.Categoria.CriarProdutoUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Categoria.CriarCategoriaUseCase;
 using FluentValidation;
+using SistemaControleProdutosEstoque.Application.Exceptions;
 
 namespace SistemaControleProdutosEstoque.Application.UseCases;
 
@@ -24,7 +25,7 @@ public class CriarCategoriaUseCase : ICriarCategoriaUseCase
 
         var jaExiste = await _categoriaRepository.ExisteCategoriaComNomeAsync(request.Nome);
         if(jaExiste)
-                throw new InvalidOperationException("Já existe uma categoria com o mesmo nome.");
+                throw new BusinessException("Já existe uma categoria com o mesmo nome.");
 
         var novaCategoria = Domain.Entities.Categoria.Criar(request.Nome);
 

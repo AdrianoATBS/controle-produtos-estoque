@@ -1,4 +1,5 @@
-﻿using SistemaControleProdutosEstoque.Domain.Interfaces;
+﻿using SistemaControleProdutosEstoque.Application.Exceptions;
+using SistemaControleProdutosEstoque.Domain.Interfaces;
 
 namespace SistemaControleProdutosEstoque.Application.UseCases.Categoria.DeletarCategoria;
 
@@ -14,14 +15,14 @@ public class DeletarCategoriaUseCase : IDeletarCategoriaUseCase
 
         var categoria = await _repository.ObterCategoriaIdAsync(id);
         if (categoria == null)
-            throw new ArgumentException("Categoria não encontrada");
+            throw new NotFoundException("Categoria não encontrada");
 
         if (categoria.Ativo) { 
-            throw new ArgumentException("Não é possível deletar uma categoria ativa");
+            throw new BusinessException("Não é possível deletar uma categoria ativa");
         }
 
         if(categoria.Produtos != null && categoria.Produtos.Any())
-                throw new ArgumentException("Não é possível deletar uma categoria que possui produtos associados");
+                throw new BusinessException("Não é possível deletar uma categoria que possui produtos associados");
 
         await _repository.DeletarCategoriaAsync(id);
 
