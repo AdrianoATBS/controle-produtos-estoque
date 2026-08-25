@@ -17,12 +17,12 @@ public class BuscarProdutosPorCategoriaUseCase : IBuscarProdutosPorCategoriaUseC
         var produtos = await _produtoRepository.ObterProdutosPorCategoriaAsync(id);
         
 
-        return produto.Select(p => new BuscarProdutosPorCategoriaResponse { 
+        return produtos.Select(p => new BuscarProdutosPorCategoriaResponse { 
             CategoriaId = p.CategoriaId,
             Nome = p.Nome,
             Descricao = p.Descricao,
             Ativo = p.Ativo,
-            NomeCategoria = p.Categoria?.Nome ?? "Sem categoria",
+            NomeCategoria = p.Categoria?.Nome,
             DataCriacao = p.DataCriacao
         });
 
