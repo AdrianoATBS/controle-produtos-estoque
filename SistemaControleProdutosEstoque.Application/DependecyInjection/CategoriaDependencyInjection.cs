@@ -2,7 +2,7 @@
 using SistemaControleProdutosEstoque.Application.UseCases;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.AlterarNomeCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.BuscarCategoriaPorIdUseCase;
-using SistemaControleProdutosEstoque.Application.UseCases.Categoria.CriarProdutoUseCase;
+using SistemaControleProdutosEstoque.Application.UseCases.Categoria.CriarCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.DeletarCategoria;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.DesativarCategoriaUseCase;
 using SistemaControleProdutosEstoque.Application.UseCases.Categoria.ListarTodasCategoria;
