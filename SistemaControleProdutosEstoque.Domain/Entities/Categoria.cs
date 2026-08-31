@@ -2,11 +2,12 @@
 
 public class Categoria
 {
+    private readonly List<Produto> _produtos = new();
     public Guid Id { get; private set; }
     public string Nome { get; private set; } = string.Empty;
     public bool Ativo { get; private set; }
     public DateTime DataCriacao { get; private set; }
-    public ICollection<Produto> Produtos { get; private set; } = new List<Produto>();
+    public IReadOnlyCollection<Produto> Produtos => _produtos.AsReadOnly();
     private Categoria() { }
     private Categoria(string nome)
     {
