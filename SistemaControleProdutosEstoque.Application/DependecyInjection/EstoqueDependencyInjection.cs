@@ -18,6 +18,7 @@ public static class EstoqueDependencyInjection
         services.AddScoped<IBuscarUltimaMovimentacaoDoProdutoUseCase, BuscarUltimaMovimentacaoDoProdutoUseCase>();
         services.AddScoped<IBuscarTodasMovimentacoesUseCase, BuscarTodasMovimentacoesUseCase>();
         services.AddScoped<IFiltrarPorPeriodoUseCase, FiltrarPorPeriodoUseCase>();
+        services.AddScoped<FiltrarPorPeriodoRequestValidator>();
 
 
         return services;
