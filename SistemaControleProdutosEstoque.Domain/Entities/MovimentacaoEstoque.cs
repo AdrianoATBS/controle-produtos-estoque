@@ -10,7 +10,7 @@ public class MovimentacaoEstoque
     public TipoMovimentacao Tipo { get; private set; }
     public int Quantidade { get; private set; }
     public DateTime DataMovimentacao { get; private set; }
-    private MovimentacaoEstoque() { }
+    private MovimentacaoEstoque() { Produto = null!; }
 
     private MovimentacaoEstoque(Produto produto, TipoMovimentacao tipo, int quantidade)
     {
@@ -25,7 +25,6 @@ public class MovimentacaoEstoque
     {
         ValidarProduto(produto);
         ValidarQuantidade(quantidade);
-        ValidarRegrasEstoque(produto!, tipo, quantidade);
         return new MovimentacaoEstoque(produto!, tipo, quantidade);
 
     }
@@ -45,10 +44,6 @@ public class MovimentacaoEstoque
         if (quantidade <= 0)
             throw new ArgumentException("A quantidade da movimentação deve ser maior que zero.");
     }
-    private static void ValidarRegrasEstoque(Produto produto, TipoMovimentacao tipo, int quantidade)
-    {
-        if (tipo == TipoMovimentacao.Saida && produto.QuantidadeEstoque < quantidade)
-            throw new InvalidOperationException("Não é possível realizar uma saída de estoque com quantidade maior que a disponível.");
-    }
+   
 
 }

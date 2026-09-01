@@ -12,7 +12,7 @@ public class Produto
     public bool Ativo { get; private set; }
     public DateTime DataCriacao { get; private set; }
 
-    private Produto() { }
+    private Produto() { Categoria = null!; }
     private Produto(string nome, string descricao, decimal preco,
         int quantidadeEstoque, Categoria categoria)
     {
@@ -27,11 +27,11 @@ public class Produto
         DataCriacao = DateTime.Now;
     }
     public static Produto Criar(string nome, string descricao, decimal preco,
-        int quantidadeEsotque, Categoria? categoria)
+        int quantidadeEsotque, Categoria categoria)
     {
         ValidarNome(nome);
         ValidarPreco(preco);
-        QuantidadeEstoqueValida(quantidadeEsotque);
+        ValidarQuantidadeEstoque(quantidadeEsotque);
         ValidarCategoria(categoria);
 
         return new Produto(nome, descricao, preco, quantidadeEsotque, categoria);
@@ -47,12 +47,12 @@ public class Produto
         if (preco <= 0)
             throw new ArgumentException("O preçõ do produto deve ser maior que zero.");
     }
-    private static void QuantidadeEstoqueValida(int quantidade)
+    private static void ValidarQuantidadeEstoque(int quantidade)
     {
         if(quantidade < 0)
             throw new ArgumentException("A quantidade em estoque não pode ser negativa.");
     }
-    private static void ValidarCategoria(Categoria? categoria)
+    private static void ValidarCategoria(Categoria categoria)
     {
          if(categoria == null)
                 throw new ArgumentNullException("A categoria do produto é obrigatória.");
@@ -63,6 +63,7 @@ public class Produto
     {
         if(!Ativo)
                throw new InvalidOperationException("O produto já está desativado.");
+        
         Ativo = false;
     }
     public void Ativar()
@@ -89,7 +90,7 @@ public class Produto
     }
     public void RemoverEstoque(int quantidade)
     {
-        if (quantidade > 0)
+        if (quantidade <= 0)
             throw new ArgumentException("Quantidade inválida");
         if (QuantidadeEstoque < quantidade)
             throw new InvalidOperationException("Estoque insuficiente");
