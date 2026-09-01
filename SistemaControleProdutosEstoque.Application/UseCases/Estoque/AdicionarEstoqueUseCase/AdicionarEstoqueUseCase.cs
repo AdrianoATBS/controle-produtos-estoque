@@ -33,10 +33,11 @@ public class AdicionarEstoqueUseCase : IAdicionarEstoqueUseCase
         if (produto == null)
             throw new NotFoundException("Produto não encontrado");
      
-        ProcessarMovimentacaoProduto(produto, request.TipoEstoque, request.Quantidade);
-
         var movimentacao = MovimentacaoEstoque.Criar(produto, request.TipoEstoque,
             request.Quantidade);
+        
+        ProcessarMovimentacaoProduto(produto, request.TipoEstoque, request.Quantidade);
+
 
         await _produtoRepository.AtualizarProdutoAsync(produto);
         await _movimentacaoEstoqueRepository.RegistrarMovimentacaoEstoqueAsync(movimentacao);
