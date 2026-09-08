@@ -26,7 +26,7 @@ public class CategoriaRepository : ICategoriaRepository
 
     public async Task DeletarCategoriaAsync(Guid id)
     {
-        var categoria = _context.Categorias.FirstOrDefault(c => c.Id == id);
+        var categoria = await _context.Categorias.FirstOrDefaultAsync(c => c.Id == id);
         if (categoria != null)
         {
             _context.Categorias.Remove(categoria);
