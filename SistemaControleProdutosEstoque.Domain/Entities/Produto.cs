@@ -63,13 +63,16 @@ public class Produto
     {
         if(!Ativo)
                throw new InvalidOperationException("O produto já está desativado.");
-        
+        if(QuantidadeEstoque > 0)
+            throw new InvalidOperationException("Não é possível desativar um produto com estoque disponível.");
         Ativo = false;
     }
     public void Ativar()
     {
         if(Ativo)
             throw new InvalidOperationException("O produto já está ativado.");
+       
+        
         Ativo = true;
     }
     public void AlterarDados(string novoNome, string novaDescricao, decimal novoPreco)
