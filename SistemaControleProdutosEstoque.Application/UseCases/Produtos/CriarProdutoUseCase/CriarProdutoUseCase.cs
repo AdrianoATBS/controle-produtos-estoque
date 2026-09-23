@@ -34,9 +34,7 @@ public class CriarProdutoUseCase : ICriarProdutoUseCase
         
         if(categoriaEntidade == null)
             throw new NotFoundException($"A categoria informada não existe.");
-        if(!categoriaEntidade.Ativo)
-                throw new BusinessException("Não é possivel associar um produto a uma categoria inativa.");
-
+        
         var novoProduto = Domain.Entities.Produto.Criar(
             request.Nome,
             request.Descricao,
