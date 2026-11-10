@@ -44,8 +44,9 @@ public class Categoria
     {
         if(!Ativo)
             throw new InvalidOperationException("A categoria já está desativada.");
+
         if(Produtos.Any(p => p.Ativo))
-            throw new InvalidOperationException("Não é possível desativar uma categoria que possui produtos ativos.");))
+            throw new InvalidOperationException("Não é possível desativar uma categoria que possui produtos ativos.");
         Ativo = false;
     }
     
