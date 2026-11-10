@@ -7,11 +7,12 @@ namespace SistemaControleProdutosEstoque.Application.UseCases.Estoque.BuscarMovi
 public class BuscarMovimentacaoPorProdutoUseCase : IBuscarMovimentacaoPorProdutoUseCase
 {
     private readonly IMovimentacaoEstoqueRepository _movimentacaoEstoqueRepository;
-    private readonly IProdutoRepository _produtoRepository;
-    public BuscarMovimentacaoPorProdutoUseCase(IMovimentacaoEstoqueRepository movimentacaoEstoqueRepository, IProdutoRepository produtoRepository)
+
+    public BuscarMovimentacaoPorProdutoUseCase(IMovimentacaoEstoqueRepository 
+        movimentacaoEstoqueRepository)
     {
         _movimentacaoEstoqueRepository = movimentacaoEstoqueRepository;
-        _produtoRepository = produtoRepository;
+
     }
     public async Task<List<BuscarMovimentacaoPorProdutoResponse>> Executar(Guid produtoId)
     {
