@@ -46,7 +46,7 @@ public class AdicionarEstoqueUseCase : IAdicionarEstoqueUseCase
         {
             Id = movimentacao.Id,
             Quantidade = movimentacao.Quantidade,
-            QuantidadeAtual = produto.QuantidadeEstoque.ToString(),
+            QuantidadeAtual = produto.QuantidadeEstoque,
             TipoEstoque = movimentacao.Tipo,
             DataCriacao = movimentacao.DataMovimentacao.ToString("dd/MM/yyyy HH:mm:ss")
         };
