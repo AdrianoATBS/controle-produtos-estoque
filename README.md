@@ -4,9 +4,9 @@
 
 ##  Preview
 
-\<!-- Adicione aqui capturas de tela da documentação Swagger -->
+<!-- Adicione aqui capturas de tela da documentação Swagger -->
 
-\<!-- Exemplo: ![Controle de Produtos e Estoque - Swagger]\(./docs/screenshots/swagger.png) -->
+<!-- Exemplo: ![Controle de Produtos e Estoque - Swagger]\(./docs/screenshots/swagger.png) -->
 
 ##  Descrição
 
