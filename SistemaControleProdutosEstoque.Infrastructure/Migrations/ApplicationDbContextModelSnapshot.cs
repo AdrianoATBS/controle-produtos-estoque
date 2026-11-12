@@ -114,7 +114,7 @@ namespace SistemaControleProdutosEstoque.Infrastructure.Migrations
                     b.HasOne("SistemaControleProdutosEstoque.Domain.Entities.Produto", "Produto")
                         .WithMany()
                         .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Produto");
